@@ -148,3 +148,17 @@ h1 {
     color: #fff;
     letter-spacing: 5px;
 }
+
+.error {
+    width: 200px;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    padding: 7px;
+    border: rgb(199, 43, 43) 3px solid;
+    border-radius: 7px;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.2;
+}

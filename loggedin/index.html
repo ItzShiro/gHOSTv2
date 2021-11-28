@@ -109,10 +109,11 @@
                     }
                 })
                 user.providerData.forEach(function(e) {
-                    var provider = `"${e.providerId}"`
+                    var provider = `${e.providerId}`
                     console.log(provider)
                     document.querySelector('.dropdown .content .settings').style.display = "none";
-                    if (provider === "password") {
+                    if (provider == "password") {
+                        console.log("settings")
                         document.querySelector('.dropdown .content .settings').style.display = "block";
                     }
                 });
