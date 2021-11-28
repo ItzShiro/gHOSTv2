@@ -25,6 +25,11 @@
         </div>
     </div>
 
+
+    <div class="notifications">
+    </div>
+
+
     <nav>
         <div class="midIcons">
             <div class="icon">
@@ -62,11 +67,11 @@
                         <div class="elements">
                             <span>
                                 <i class="far fa-user"></i> 
-                                <a href="#">Change Nickname</a>
+                                <a onclick="User.openPopup('dname')" href="#">Change Nickname</a>
                             </span>
                             <span>
                                 <i class="fas fa-unlock-alt"></i>
-                                <a href="#">Change Password</a>
+                                <a onclick="User.openPopup('password')" href="#">Change Password</a>
                             </span>
                             <span>
                                 <i class="far fa-user-circle"></i>
@@ -85,6 +90,14 @@
             </div>
         </div>
     </nav>
+    <div class="changePopup">
+        <div class="close" onclick="User.closePopup()"><i class="fa fa-times-circle" aria-hidden="true"></i></div>
+        <div class="content">
+            <span>Change Password</span>
+            <input type="text">
+            <button>Change</button>
+        </div>
+    </div>
 
     <script src="../firebase/conn.js"></script>
     <script src="../assets/js/functions/user/userFunctions.js"></script>
