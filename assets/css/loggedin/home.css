@@ -340,11 +340,14 @@ hr {
 .notification {
     width: 400px;
     height: 90px;
-    background: #c5cbcc;
+    background: #434c5e;
+    color: #ccc;
     border-radius: 7px;
     padding: 3px;
     transition: 0.2s;
     animation: notificationShow 0.2s ease-in-out;
+    z-index: 999999;
+    margin-top: 9px;
 }
 
 .notification .thumbnail {
