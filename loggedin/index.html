@@ -111,10 +111,14 @@
                 user.providerData.forEach(function(e) {
                     var provider = `${e.providerId}`
                     console.log(provider)
-                    document.querySelector('.dropdown .content .settings').style.display = "none";
-                    if (provider == "password") {
-                        console.log("settings")
-                        document.querySelector('.dropdown .content .settings').style.display = "block";
+                    if (provider !== "password") {
+                        document.querySelector('.dropdown .content .settings .elements').innerHTML = `
+                        <div class="elements">
+                            <span>
+                                <i class="far fa-user-circle"></i>
+                                <a href="#">Password</a>
+                            </span>
+                        </div>`;
                     }
                 });
                 this.setTimeout(() => {
