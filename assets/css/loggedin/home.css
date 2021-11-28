@@ -337,6 +337,13 @@ hr {
     }
 }
 
+.notifications {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}
+
 .notification {
     width: 400px;
     height: 90px;
@@ -346,7 +353,7 @@ hr {
     padding: 3px;
     transition: 0.2s;
     animation: notificationShow 0.2s ease-in-out;
-    z-index: 999999;
+    z-index: 9999;
     margin-top: 9px;
 }
 
