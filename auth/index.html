@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+
+    <link rel="stylesheet" href="../assets/css/auth/login.css" />
+</head>
+
+<body>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+
+    <div class="login">
+        <div class="form">
+            <h1>Login</h1>
+
+            <div class="input">
+                <div class="icon">
+                    <i class="far fa-envelope"></i>
+                </div>
+                <input type="text" required />
+                <div class="placeholder">Email</div>
+                <div class="border"></div>
+            </div>
+            <div style="margin-top: 40px; margin-bottom: 20px" class="input">
+                <div class="icon">
+                    <i class="fas fa-unlock-alt"></i>
+                </div>
+                <input type="password" required />
+                <div class="placeholder">Password</div>
+                <div class="border"></div>
+            </div>
+            <div class="button">
+                <button onclick="loginWith('google')" class="google">
+            <i class="fab fa-google"></i>
+          </button>
+                <button onclick="login(document.querySelector(`input[type='text']`).value, document.querySelector(`input[type='password']`).value, )" class="login">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../firebase/conn.js"></script>
+    <script src="../assets/js/functions/auth/login.js"></script>
+</body>
+
+</html>

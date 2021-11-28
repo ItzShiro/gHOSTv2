@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #ccc;
+    font-family: 'Poppins', sans-serif;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: #3B4252;
+}
+
+.login {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 390px;
+    height: 400px;
+    position: relative;
+}
+
+.input {
+    width: 390px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.input input {
+    outline: none;
+    width: 100%;
+    height: 45px;
+    transform: translateY(-5px);
+    padding: 10px;
+    font-size: 22px;
+    background: transparent;
+    border: none;
+}
+
+.input .placeholder {
+    transform: translateY(-5px);
+    position: absolute;
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: 3px;
+    left: 36px;
+    transition: 0.2s;
+    pointer-events: none;
+}
+
+.input input[type="password"] {
+    letter-spacing: 5px;
+    font-weight: 900;
+}
+
+.input .border {
+    display: block;
+    position: absolute;
+    width: 81%;
+    height: 5px;
+    border-radius: 5px;
+    background: #4C566A;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: 0.2s;
+}
+
+.input .icon {
+    font-size: 32px;
+    transform: translateY(-4px);
+}
+
+i {
+    color: #87beff;
+}
+
+.input input:focus+.placeholder,
+.input input:valid+.placeholder {
+    font-size: 13px;
+    letter-spacing: 2px;
+    transform: translateY(-27px);
+}
+
+.input input:valid~.border {
+    width: 90%;
+}
+
+.input input:focus~.border {
+    width: 100%;
+}
+
+.button {
+    display: flex;
+}
+
+.button button {
+    cursor: pointer;
+    width: 170px;
+    height: 45px;
+    margin-left: 15px;
+    border-radius: 7px;
+    border: none;
+    background: #434C5E;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    transition: 0.2s;
+}
+
+.button button:hover {
+    color: #fff;
+}
+
+.button .google {
+    width: 45px;
+    height: 45px;
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 50px;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    color: #fff;
+    letter-spacing: 5px;
+}

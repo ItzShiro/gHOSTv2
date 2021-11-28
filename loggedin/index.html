@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link rel="stylesheet" href="../assets/css/common.css" />
+    <link rel="stylesheet" href="../assets/css/loggedin/home.css" />
+
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+</head>
+
+<body>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+
+    <div class="loader">
+        <div class="content">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <nav>
+        <div class="midIcons">
+            <div class="icon">
+                <i class="fas fa-home"> </i>
+                <div class="label">Home</div>
+            </div>
+            <div class="icon">
+                <i class="fas fa-users"></i>
+                <div class="label">Group</div>
+            </div>
+        </div>
+        <div class="rightIcons">
+            <div class="profileMini">
+                <img src="../assets/img/defaultAvatar.png" class="avatarPicture" alt="profilePic" />
+                <span class="displayName">noname</span>
+            </div>
+            <div class="notifications">
+                <div class="icon"><i class="fas fa-bell"></i></div>
+            </div>
+            <div class="dropdown">
+                <div onclick="Content.dropdownToggle()" class="icon dropdownOpen"><i class="fas fa-caret-down"></i></div>
+                <div class="content">
+                    <section class="profile">
+                        <img src="../assets/img/defaultAvatar.png" class="avatarPicture" alt="profilePic" />
+                        <div class="text">
+                            <span class="displayName">noname</span>
+                            <span style="opacity: 0.6; width: 186px;">Click to see your profile</span>
+                        </div>
+                    </section>
+                    <hr />
+                    <section class="settings" id="dropdownSettings">
+                        <div class="thumbnail">
+                            <span><i class="fas fa-sliders-h"></i> Settings</span>
+                        </div>
+                        <div class="elements">
+                            <span>
+                                <i class="far fa-user"></i> 
+                                <a href="#">Change Nickname</a>
+                            </span>
+                            <span>
+                                <i class="fas fa-unlock-alt"></i>
+                                <a href="#">Change Password</a>
+                            </span>
+                            <span>
+                                <i class="far fa-user-circle"></i>
+                                <a href="#">Change Avatar</a>
+                            </span>
+                        </div>
+                        <hr />
+                    </section>
+                    <section class="operations">
+                        <button onclick="User.logout()">
+                            <i class="fas fa-sign-out-alt"></i> 
+                            Logout
+                        </button>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script src="../firebase/conn.js"></script>
+    <script src="../assets/js/functions/user/userFunctions.js"></script>
+
+    <script>
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                location.href = "../auth";
+            } else {
+                document.querySelectorAll('.displayName').forEach((e) => {
+                    if (user.displayName === null) {
+                        return;
+                    } else {
+                        e.innerHTML = user.displayName
+                    }
+                })
+                document.querySelectorAll('.avatarPicture').forEach((e) => {
+                    if (user.photoURL === null) {
+                        return;
+                    } else {
+                        e.src = user.photoURL
+                    }
+                })
+                user.providerData.forEach(function(e) {
+                    var provider = `"${e.providerId}"`
+                    console.log(provider)
+                    document.querySelector('.dropdown .content .settings').style.display = "none";
+                    if (provider === "password") {
+                        document.querySelector('.dropdown .content .settings').style.display = "block";
+                    }
+                });
+                this.setTimeout(() => {
+                    document.querySelector('.loader').style.opacity = "0"
+                    document.querySelector('.loader').style.pointerEvents = "none"
+                }, 500)
+            }
+        });
+    </script>
+</body>
+
+</html>
