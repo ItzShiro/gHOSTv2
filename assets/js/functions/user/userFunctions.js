@@ -32,7 +32,13 @@ var User = {
             }, 5000)
         }).catch((error) => {
             console.log(error.code)
-            Content.notification("Error", "An Error occured while changing Password")
+
+            if (error.code == "auth/weak-password") {
+                Content.notification("Error", "An Error occured while changing Password: Your Password is too weak")
+            } else {
+                Content.notification("Error", "An Error occured while changing Password, Relogin and try again")
+            }
+
         });
     },
     changeAvatar: function() {
@@ -134,3 +140,42 @@ var Content = {
         }, 2000);
     }
 }
+
+firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+        location.href = "../auth";
+    } else {
+        document.querySelectorAll('.displayName').forEach((e) => {
+            if (user.displayName === null) {
+                return;
+            } else {
+                e.innerHTML = user.displayName
+            }
+        })
+        document.querySelectorAll('.avatarPicture').forEach((e) => {
+            if (user.photoURL === null) {
+                return;
+            } else {
+                e.style.background = "#fff"
+                e.src = user.photoURL
+            }
+        })
+        user.providerData.forEach(function(e) {
+            var provider = `${e.providerId}`
+            console.log(provider)
+            if (provider !== "password") {
+                document.querySelector('.dropdown .content .settings .elements').innerHTML = `
+                <div class="elements">
+                    <span>
+                        <i class="far fa-user-circle"></i>
+                        <a onclick="User.openPopup('password')" href="#">Password</a>
+                    </span>
+                </div>`;
+            }
+        });
+        this.setTimeout(() => {
+            document.querySelector('.loader').style.opacity = "0"
+            document.querySelector('.loader').style.pointerEvents = "none"
+        }, 500)
+    }
+});

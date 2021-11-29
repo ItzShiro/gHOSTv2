@@ -102,47 +102,6 @@
 
     <script src="../firebase/conn.js"></script>
     <script src="../assets/js/functions/user/userFunctions.js"></script>
-
-    <script>
-        firebase.auth().onAuthStateChanged((user) => {
-            if (!user) {
-                location.href = "../auth";
-            } else {
-                document.querySelectorAll('.displayName').forEach((e) => {
-                    if (user.displayName === null) {
-                        return;
-                    } else {
-                        e.innerHTML = user.displayName
-                    }
-                })
-                document.querySelectorAll('.avatarPicture').forEach((e) => {
-                    if (user.photoURL === null) {
-                        return;
-                    } else {
-                        e.style.background = "#fff"
-                        e.src = user.photoURL
-                    }
-                })
-                user.providerData.forEach(function(e) {
-                    var provider = `${e.providerId}`
-                    console.log(provider)
-                    if (provider !== "password") {
-                        document.querySelector('.dropdown .content .settings .elements').innerHTML = `
-                        <div class="elements">
-                            <span>
-                                <i class="far fa-user-circle"></i>
-                                <a href="#">Password</a>
-                            </span>
-                        </div>`;
-                    }
-                });
-                this.setTimeout(() => {
-                    document.querySelector('.loader').style.opacity = "0"
-                    document.querySelector('.loader').style.pointerEvents = "none"
-                }, 500)
-            }
-        });
-    </script>
 </body>
 
 </html>
