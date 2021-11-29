@@ -26,14 +26,41 @@ var User = {
 
         user.updatePassword(newPassword).then(() => {
             console.log("Password Changed")
-            Content.notification("Succsess", "Your password has been changed")
+            Content.notification("Succsess", "Your password has been changed, Reloading in 5 seconds")
+            window.setTimeout(() => {
+                window.location.reload(true);
+            }, 5000)
         }).catch((error) => {
             console.log(error.code)
             Content.notification("Error", "An Error occured while changing Password")
         });
-        window.setTimeout(() => {
-            window.location.reload(true);
-        }, 5000)
+    },
+    changeAvatar: function() {
+        popupBody.classList.remove('active')
+        let fileUpload = document.querySelector('input[type="file"]#profile_pic')
+
+        firebase.storage().ref('users/' + firebase.auth().currentUser.uid + '/profile.jpg').put(fileUpload.files[0]).then(() => {
+            console.log("Successfully Uploaded");
+            firebase.storage().ref('users/' + firebase.auth().currentUser.uid + '/profile.jpg').getDownloadURL().then(url => {
+                firebase.auth().currentUser.updateProfile({
+                    photoURL: url
+                }).then(() => {
+                    console.log(`Changed Profile Picture`)
+                    Content.notification("Succsess", "Your Avatar has been changed, Reloading in 5seconds")
+                    window.setTimeout(() => {
+                        window.location.reload(true);
+                    }, 5000)
+                }).catch((error) => {
+                    console.log("An Error occured while changing avatar")
+                    Content.notification("Error", "An Error occured while changing Avatar")
+                    console.log(error)
+                });
+            })
+        }).catch(error => {
+            console.log(error.code)
+        })
+
+
     },
     closePopup: function() {
         popupBody.classList.remove('active')
@@ -61,6 +88,17 @@ var User = {
                         <button onclick="User.changeDName(document.querySelector('.changePopup .content input').value)">Change</button>
                     </div>`;
                 break;
+            case ("avatar"):
+
+                popupContent.innerHTML = `
+                    <div class="content">
+                        <span>Change Avatar</span>
+                        <input type="file" id="profile_pic" name="profile_pic"
+          accept=".jpg, .jpeg, .png"></input>
+                        <button onclick="User.changeAvatar()">Change</button>
+                    </div>`;
+                break;
+
         }
     }
 }
