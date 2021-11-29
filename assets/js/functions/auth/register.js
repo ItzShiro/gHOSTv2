@@ -1,6 +1,8 @@
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-        location.href = '../loggedin'
+        window.setTimeout(() => {
+            location.href = '../loggedin'
+        }, 2000)
     }
 });
 
@@ -15,6 +17,8 @@ function register(email, password, username) {
                 firebase.auth().currentUser.sendEmailVerification()
                     .then(() => {
                         console.log("Verification Email Sent")
+                    }).catch((error) => {
+                        console.error(error)
                     });
                 firebase.auth().currentUser.updateProfile({
                     displayName: username
