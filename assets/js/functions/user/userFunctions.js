@@ -68,6 +68,95 @@ var User = {
 
 
     },
+    addPost: function() {
+
+
+        function makeid(length) {
+            var result = '';
+            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for (var i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() *
+                    charactersLength));
+            }
+            return photoId = result;
+        }
+
+        makeid(20)
+
+        var photoId
+
+        let fileUpload = document.querySelector('input[type="file"]#post_pic')
+        var postImageLink = null
+
+        if (fileUpload.files[0] !== null) {
+            firebase.storage().ref('posts/' + photoId + ".jpg").put(fileUpload.files[0]).then(() => {
+                console.log("Successfully Uploaded");
+                firebase.storage().ref('posts/' + photoId + ".jpg").getDownloadURL().then(url => {
+                    return postImageLink = url
+                })
+            }).catch(error => {
+                console.log(error.code)
+            }).then(() => {
+                if (document.querySelector('input[type="text"].postInput').value.length == 0 || document.querySelector('input[type="text"].postInput').value == "" || document.querySelector('input[type="text"].postInput').value.length == " " && postImageLink == null) {
+                    Content.notification("Error", "Please add something to your post first")
+                } else {
+                    Content.notification("Success", "Added your post")
+                    window.setTimeout(() => {
+                        firebase.database().ref("posts").push().set({
+                            "sender": firebase.auth().currentUser.displayName,
+                            "senderProfile": pPicture,
+                            "timestamp": displayTime(),
+                            "message": document.querySelector('input[type="text"].postInput').value,
+                            "postImageUrl": validateImage()
+                        });
+
+                        postImageLink = ""
+                    }, 500)
+                }
+            })
+        }
+
+
+
+
+        var pPicture
+
+        if (firebase.auth().currentUser.photoURL !== null) {
+            pPicture = firebase.auth().currentUser.photoURL
+        } else {
+            pPicture = '../assets/img/defaultAvatar.png'
+        }
+
+        function displayTime() {
+            var str = "";
+
+            const d = new Date();
+            var hours = d.getHours()
+            var minutes = d.getMinutes()
+            if (minutes < 10) {
+                minutes = "0" + minutes
+            }
+            str = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()} - ` + hours + ":" + minutes + " ";
+            return str;
+        }
+
+        function validateImage() {
+            if (document.querySelector('input[type="file"]#post_pic').value.split(/(\\|\/)/g).pop() == '') {
+                return "";
+            } else {
+                if (postImageLink == null) {
+                    return "";
+                } else {
+                    return postImageLink
+                }
+            }
+        }
+
+
+
+
+    },
     closePopup: function() {
         popupBody.classList.remove('active')
     },
@@ -108,6 +197,58 @@ var User = {
         }
     }
 }
+
+var addPostPhoto = function() {
+    document.querySelector('input[type="file"]#post_pic').click()
+}
+
+firebase.database().ref("posts").on("child_added", function(snapshot) {
+
+    var user = firebase.auth().currentUser
+    var html = "";
+
+    if (snapshot.val().senderUid == user.uid) {
+        html = `<div class="post">
+        <div class="thumbnail">
+        your post
+          <div class="avatar">
+            <img src="${snapshot.val().senderProfile}" alt="profilePic">
+          </div>
+          <div class="text">
+            <span class="nickname">${snapshot.val().sender}</span>
+            <span class="timestamp">${snapshot.val().timestamp}</span>
+          </div>
+        </div>
+        <div class="border"></div>
+        <div class="content">
+          <span class="text">${snapshot.val().message }</span>
+          <img src="${snapshot.val().postImageUrl}">
+          <div class="border"></div>
+        </div>
+        </div>`
+    } else {
+        html = `<div class="post">
+        <div class="thumbnail">
+          <div class="avatar">
+            <img src="${snapshot.val().senderProfile}" alt="profilePic">
+          </div>
+          <div class="text">
+            <span class="nickname">${snapshot.val().sender}</span>
+            <span class="timestamp">${snapshot.val().timestamp}</span>
+          </div>
+        </div>
+        <div class="border"></div>
+        <div class="content">
+          <span class="text">${snapshot.val().message }</span>
+          <img src="${snapshot.val().postImageUrl}">
+          <div class="border"></div>
+        </div>
+        </div>`
+    }
+
+    document.querySelector('.posts .content').insertAdjacentHTML('afterbegin', html);
+
+})
 var Content = {
     dropdownToggle: function() {
         document.querySelector('.dropdownOpen').classList.toggle('active')

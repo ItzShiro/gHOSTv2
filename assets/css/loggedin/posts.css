@@ -1,0 +1,161 @@
+.post {
+    width: 512px;
+    height: auto;
+    background: #434C5E;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.post * {
+    color: #ccc;
+}
+
+.post .thumbnail {
+    width: 100%;
+    height: 86px;
+    overflow: hidden;
+    display: flex;
+}
+
+.post .avatar {
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+    margin: calc(16px / 2) 10px 0px 10px;
+    border-radius: 50%;
+}
+
+.post .avatar img {
+    width: 70px;
+    min-height: 70px;
+    background-color: white;
+}
+
+.post .thumbnail .text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.post .thumbnail .text .nickname span {
+    opacity: 0.3;
+}
+
+.post .thumbnail .text .timestamp {
+    font-size: 13px;
+    opacity: 0.3;
+}
+
+.post .thumbnail .text .nickname {
+    font-size: 22px;
+}
+
+.post .border {
+    margin: 5px;
+    margin-left: 2%;
+    width: 96%;
+    height: 2px;
+    background: #ccc;
+}
+
+.post .content {
+    padding: 2%;
+    overflow: hidden;
+    max-height: 512px;
+    position: relative;
+}
+
+.post .content .text {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.post .content img {
+    width: 100%;
+    background-color: white;
+}
+
+.post .content .border {
+    height: 10px;
+    background: #434C5E;
+    width: 100%;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+}
+
+
+/*
+<div class="sendPost">
+                <input type="text" class="postInput">
+                <input onchange="writeFilename()" type="file" id="post_pic" name="post_pic" accept=".jpg, .jpeg, .png"></input>
+                <button onclick="addPostPhoto()">Add Photo</button>
+                <span><span class="fileNamedisplay">No File Selected</span>
+                <script>
+                    function writeFilename() {
+                        document.querySelector('.fileNamedisplay').innerHTML = document.querySelector('input[type="file"]#post_pic').value.split(/(\\|\/)/g).pop()
+                    }
+                </script>
+                </span>
+                <button onclick="User.addPost()">Send</button>
+            </div>*/
+
+.sendPost * {
+    color: #ccc;
+}
+
+.sendPost {
+    width: 512px;
+    height: 135px;
+    background: #434C5E;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    margin-top: 15px;
+    position: relative;
+}
+
+.sendPost input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    height: 65px;
+    border: none;
+    font-size: 20px;
+    background-color: #2e3440;
+}
+
+.sendPost .sendBtn {
+    width: 100px;
+    height: 35px;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 5px;
+    border: none;
+    background-color: #2e3440;
+}
+
+.posts {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.photoAddBtn {
+    width: 100px;
+    height: 35px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    border-radius: 5px;
+    border: none;
+    background-color: #2e3440;
+    margin-top: 2px;
+    margin-left: 5px;
+}

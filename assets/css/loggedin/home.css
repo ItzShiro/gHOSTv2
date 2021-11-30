@@ -379,3 +379,9 @@ div.hide {
         transform: translateX(-100%);
     }
 }
+
+.bodyContent {
+    height: calc(100% - 65px);
+    transform: translateY(65px);
+    overflow-y: scroll;
+}
