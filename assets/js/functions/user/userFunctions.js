@@ -106,6 +106,7 @@ var User = {
                         firebase.database().ref("posts").push().set({
                             "sender": firebase.auth().currentUser.displayName,
                             "senderProfile": pPicture,
+                            "senderUid": firebase.auth().currentUser.uid,
                             "timestamp": displayTime(),
                             "message": document.querySelector('input[type="text"].postInput').value,
                             "postImageUrl": validateImage()

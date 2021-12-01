@@ -6,14 +6,13 @@ firebase.database().ref("posts").on("child_added", function(snapshot) {
     var html = "";
 
     if (snapshot.val().senderUid == user.uid) {
-        html = `<div class="post">
+        html = `<div id="${snapshot.key}" class="post">
         <div class="thumbnail">
-        your post
           <div class="avatar">
             <img src="${snapshot.val().senderProfile}" alt="profilePic">
           </div>
           <div class="text">
-            <span class="nickname">${snapshot.val().sender}</span>
+            <span class="nickname">${snapshot.val().sender} <span>You</span></span>
             <span class="timestamp">${snapshot.val().timestamp}</span>
           </div>
         </div>
@@ -25,7 +24,7 @@ firebase.database().ref("posts").on("child_added", function(snapshot) {
         </div>
         </div>`
     } else {
-        html = `<div class="post">
+        html = `<div  id="${snapshot.key}" class="post">
         <div class="thumbnail">
           <div class="avatar">
             <img src="${snapshot.val().senderProfile}" alt="profilePic">
