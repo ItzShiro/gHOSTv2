@@ -138,7 +138,7 @@ var User = {
             if (minutes < 10) {
                 minutes = "0" + minutes
             }
-            str = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()} - ` + hours + ":" + minutes + " ";
+            str = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()} - ` + hours + ":" + minutes;
             return str;
         }
 
