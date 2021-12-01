@@ -120,7 +120,7 @@ nav {
     pointer-events: none;
 }
 
-.dropdown .content {
+.rightIcons .dropdown .content {
     right: 5px;
     top: 70px;
     position: absolute;
@@ -130,12 +130,12 @@ nav {
     min-width: 275px;
 }
 
-.dropdown .content .profile {
+.rightIcons .dropdown .content .profile {
     display: flex;
     margin-bottom: 10px;
 }
 
-.dropdown .content .profile .text {
+.rightIcons .dropdown .content .profile .text {
     display: flex;
     flex-direction: column;
     color: #ccc;
@@ -153,7 +153,7 @@ hr {
     padding: 0;
 }
 
-.dropdown .content .profile img {
+.rightIcons .dropdown .content .profile img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -172,7 +172,7 @@ hr {
                         </div>
                     </div>*/
 
-.dropdown .content {
+.rightIcons .dropdown .content {
     opacity: 0;
     pointer-events: none;
     transform: translateY(-100%);
@@ -180,36 +180,36 @@ hr {
     z-index: 998;
 }
 
-.dropdown .content.active {
+.rightIcons .dropdown .content.active {
     opacity: 1;
     pointer-events: all;
     transform: translateY(0%);
 }
 
-.dropdown i {
+.rightIcons .dropdown i {
     color: #87beff;
 }
 
-.dropdown .content .settings {
+.rightIcons .dropdown .content .settings {
     color: #ccc;
     transition: 0.2s background;
 }
 
-.dropdown .content .settings .thumbnail {
+.rightIcons .dropdown .content .settings .thumbnail {
     font-size: 23px;
 }
 
-.dropdown .content .settings .elements {
+.rightIcons .dropdown .content .settings .elements {
     display: flex;
     flex-direction: column;
 }
 
-.dropdown .content .settings .elements a {
+.rightIcons .dropdown .content .settings .elements a {
     color: #ccc;
     text-decoration: none;
 }
 
-.dropdown .content .operations button {
+.rightIcons .dropdown .content .operations button {
     width: 90%;
     background-color: transparent;
     color: #ccc;
@@ -222,7 +222,7 @@ hr {
     transition: 0.2s;
 }
 
-.dropdown .content .operations button:hover {
+.rightIcons .dropdown .content .operations button:hover {
     transform: translateX(10px);
     color: tomato;
 }

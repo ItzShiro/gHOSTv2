@@ -32,6 +32,11 @@
     background-color: white;
 }
 
+.post .thumbnail {
+    position: relative;
+    z-index: 2;
+}
+
 .post .thumbnail .text {
     display: flex;
     flex-direction: column;
@@ -158,4 +163,42 @@
     background-color: #2e3440;
     margin-top: 2px;
     margin-left: 5px;
+}
+
+.post .thumbnail .dropdown {
+    position: absolute;
+    right: 15px;
+    top: 7px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.post .thumbnail .dropdown .content {
+    min-width: 20px;
+    padding: 5px;
+    padding-top: 5px;
+    position: absolute;
+    top: 0px;
+    right: -5px;
+}
+
+.post .thumbnail .dropdown .content div {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+}
+
+.post .thumbnail .dropdown .content i {
+    margin-right: 5px;
+}
+
+.post .thumbnail .dropdown .content span,
+.post .thumbnail .dropdown .content i {
+    transition: 0.1s;
+}
+
+.post .thumbnail .dropdown:hover .content span,
+.post .thumbnail .dropdown:hover .content i {
+    color: tomato;
+    transform: translateX(3px);
 }
