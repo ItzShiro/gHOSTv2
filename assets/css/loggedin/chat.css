@@ -1,0 +1,194 @@
+/*
+<div class="groupChat">
+    <div class="content">
+        <div class="text"></div>
+        <div class="controlls">
+            <div class="input">
+                <input type="text">
+            </div>
+            <div class="buttons">
+                <div class="send">
+                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+*/
+
+.groupChat {
+    width: 100%;
+    height: calc(100% - 65px);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    z-index: 998;
+    pointer-events: none;
+    transition: 0.2s;
+}
+
+.groupChat i {
+    color: #87beff;
+}
+
+.groupChat .content {
+    position: relative;
+    width: 600px;
+    height: 100%;
+    background-color: #3b4252;
+    transform: translateX(-150%);
+    transition: 0.3s;
+}
+
+.groupChat.active {
+    background-color: rgba(0, 0, 0, 0.7);
+    pointer-events: all;
+}
+
+.groupChat.active .content {
+    transform: translateX(0);
+}
+
+.groupChat .content .controlls {
+    width: 600px;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    height: 55px;
+    padding: 7px;
+}
+
+.groupChat .content .controlls .input {
+    width: 100%;
+}
+
+.groupChat .content .controlls input {
+    width: 100%;
+    height: 40px;
+    border-radius: 55px;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
+    border: none;
+    background-color: #434c5e;
+    color: #ccc;
+    padding: 15px;
+}
+
+.groupChat .content .text {
+    width: 100%;
+    height: calc(100% - 55px);
+    padding: 7px 7px 0px 7px;
+    overflow-y: scroll;
+}
+
+.groupChat .content .send {
+    background-color: #434c5e;
+    height: 40px;
+    width: 40px;
+    border-radius: 55px;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
+    color: #87beff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 23px;
+    cursor: pointer;
+    margin-left: 7px;
+}
+
+
+/*
+<div class="message">
+    <div class="thumbnail">
+        <img src="../assets/img/defaultAvatar.png" alt="">
+        CartoonGuy
+    </div>
+    <div class="messageContent">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia excepturi debitis officiis quis quasi iure non saepe? Laboriosam, adipisci doloremque!
+    </div>
+</div>
+*/
+
+.groupChat .message * {
+    max-width: 550px;
+}
+
+.groupChat .message {
+    background: #434C5E;
+    padding: 10px;
+    color: #ccc;
+    display: grid;
+    /*flex-direction: column;*/
+    margin-bottom: 10px;
+    width: fit-content;
+    max-width: 568px;
+    border-radius: 7px;
+    position: relative;
+    overflow: hidden;
+}
+
+.groupChat .thumbnail {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    width: fit-content
+}
+
+.groupChat .thumbnail img {
+    width: 40px;
+    margin-right: 7px;
+    border-radius: 50%;
+}
+
+.groupChat .message.byMe {
+    justify-items: end;
+    text-align: right;
+}
+
+.groupChat .message.byMe .thumbnail img {
+    margin-right: 0;
+    margin-left: 7px;
+}
+
+.groupChat .messageContainer.byMe {
+    display: grid;
+    justify-items: right;
+}
+
+.groupChat hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 2px solid #ccc;
+    opacity: 0.6;
+    padding: 0;
+    margin: 0;
+}
+
+
+/*
+<div class="messageInfo">
+    CartoonGuy
+    <span> 3.12.2021 - 0:50</span>
+</div>
+*/
+
+.groupChat .message .thumbnail .messageInfo {
+    display: flex;
+    flex-direction: column;
+    margin-right: 5px;
+}
+
+.groupChat .message .thumbnail .messageInfo span {
+    opacity: 0.3;
+    font-size: 12px;
+    margin-top: -3px;
+    margin-right: 5px;
+}
+
+.groupChat .message.byMe .thumbnail .messageInfo {
+    margin-right: 0px;
+}

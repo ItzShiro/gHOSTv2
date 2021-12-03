@@ -5,18 +5,26 @@ firebase.database().ref("posts").on("child_added", function(snapshot) {
     var user = firebase.auth().currentUser
     var html = "";
 
+    var postImage = function() {
+        if (snapshot.val().postImageUrl == undefined) {
+            return;
+        } else {
+            return `<img src="${snapshot.val().postImageUrl}">`
+        }
+    }
+
     if (snapshot.val().senderUid == user.uid) {
         html = `<div  id="${snapshot.key}" class="post">
         <div class="thumbnail">
             <div class="avatar">
-                <img src="../assets/img/defaultAvatar.png" alt="profilePic">
+                <img src="${snapshot.val().senderProfile}" alt="profilePic">
             </div>
             <div class="text">
                 <span class="nickname">${snapshot.val().sender} <span>You</span></span>
                 <span class="timestamp">${snapshot.val().timestamp}</span>
             </div>
             <div class="dropdown">
-                <div onclick="deleteMessage('${snapshot.key}')" class="content">
+                <div onclick="deleteMessage('posts','${snapshot.key}')" class="content">
                     <div class="delete">
                         <i class="far fa-trash-alt"></i>
                         <span>Delete</span>
@@ -27,7 +35,7 @@ firebase.database().ref("posts").on("child_added", function(snapshot) {
         <div class="border"></div>
         <div class="content">
           <span class="text">${snapshot.val().message }</span>
-          <img src="${snapshot.val().postImageUrl}">
+          ${postImage()}
           <div class="border"></div>
         </div>
     </div>`
@@ -45,7 +53,7 @@ firebase.database().ref("posts").on("child_added", function(snapshot) {
         <div class="border"></div>
         <div class="content">
           <span class="text">${snapshot.val().message }</span>
-          <img src="${snapshot.val().postImageUrl}">
+          ${postImage()}
           <div class="border"></div>
         </div>
         </div>`
@@ -55,12 +63,66 @@ firebase.database().ref("posts").on("child_added", function(snapshot) {
 
 })
 
-function deleteMessage(self) {
-    firebase.database().ref("posts").child(self).remove();
+
+firebase.database().ref("messages").on("child_added", function(snapshot) {
+
+    var user = firebase.auth().currentUser
+    var html = "";
+    if (snapshot.val().senderUid == user.uid) {
+        html = `
+        <div id="${snapshot.key}" class="messageContainer byMe">
+                    <div class="message byMe">
+                        <div class="thumbnail">
+                            <div class="messageInfo">
+                                ${snapshot.val().sender}
+                                <span>${snapshot.val().timestamp}</span>
+                            </div><img src="${snapshot.val().senderProfile}" alt="">
+                        </div>
+                        <div class="messageContent">
+                        ${snapshot.val().message}
+                        </div>
+                    </div>
+                </div>`
+    } else {
+        html = `
+        <div id="${snapshot.key}" class="messageContainer">
+                    <div class="message">
+                        <div class="thumbnail">
+                        <img src="${snapshot.val().senderProfile}" alt="">
+                            <div class="messageInfo">
+                                ${snapshot.val().sender}
+                                <span>${snapshot.val().timestamp}</span>
+                            </div>
+                        </div>
+                        <div class="messageContent">
+                        ${snapshot.val().message}
+                        </div>
+                    </div>
+                </div>`
+
+        if (Content.groupChatOpen == false) {
+            Content.notification(snapshot.val().sender, snapshot.val().message)
+            Content.sounds("notification")
+        }
+    }
+
+    document.querySelector('.groupChat .content .text').innerHTML += html;
+    document.querySelector('.groupChat .content .text').scrollTop = document.querySelector('.groupChat .content .text').scrollHeight;
+
+})
+
+function deleteMessage(type, self) {
+    firebase.database().ref(type).child(self).remove();
+}
+
+
+Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
 }
 firebase.database().ref("posts").on("child_removed", function(snapshot) {
     document.getElementById(snapshot.key).remove();
 });
-Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-}
+
+firebase.database().ref("messages").on("child_removed", function(snapshot) {
+    document.getElementById(snapshot.key).remove();
+});

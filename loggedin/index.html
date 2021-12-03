@@ -9,12 +9,15 @@
 
     <link rel="stylesheet" href="../assets/css/common.css" />
     <link rel="stylesheet" href="../assets/css/loggedin/home.css" />
+    <link rel="stylesheet" href="../assets/css/loggedin/base.css">
     <link rel="stylesheet" href="../assets/css/loggedin/posts.css">
+    <link rel="stylesheet" href="../assets/css/loggedin/chat.css">
 
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -39,7 +42,7 @@
                 <i class="fas fa-home"> </i>
                 <div class="label">Home</div>
             </div>
-            <div class="icon">
+            <div onclick="groupChat()" class="icon">
                 <i class="fas fa-users"></i>
                 <div class="label">Group</div>
             </div>
@@ -119,6 +122,24 @@
             <span>Change Password</span>
             <input type="text">
             <button>Change</button>
+        </div>
+    </div>
+
+    <div class="groupChat active">
+        <div class="content">
+            <div class="text">
+
+            </div>
+            <div class="controlls">
+                <div class="input">
+                    <input class="group_messageInput" type="text">
+                </div>
+                <div class="buttons">
+                    <div onclick="User.group.sendMessage()" class="send">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

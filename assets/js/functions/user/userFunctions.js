@@ -90,6 +90,7 @@ var User = {
         var postImageLink = null
 
         if (fileUpload.files[0] !== null) {
+            if (document.querySelector('input[type="file"]#post_pic').value.split(/(\\|\/)/g).pop() !== '') {}
             firebase.storage().ref('posts/' + photoId + ".jpg").put(fileUpload.files[0]).then(() => {
                 console.log("Successfully Uploaded");
                 firebase.storage().ref('posts/' + photoId + ".jpg").getDownloadURL().then(url => {
@@ -98,9 +99,12 @@ var User = {
             }).catch(error => {
                 console.log(error.code)
             }).then(() => {
-                if (document.querySelector('input[type="text"].postInput').value.length == 0 || document.querySelector('input[type="text"].postInput').value == "" || document.querySelector('input[type="text"].postInput').value.length == " " && postImageLink == null) {
+                if (document.querySelector('input[type="text"].postInput').value.length == 0 && postImageLink == null) {
                     Content.notification("Error", "Please add something to your post first")
                 } else {
+
+                    console.log()
+
                     Content.notification("Success", "Added your post")
                     window.setTimeout(() => {
                         firebase.database().ref("posts").push().set({
@@ -112,6 +116,10 @@ var User = {
                             "postImageUrl": validateImage()
                         });
 
+                        document.querySelector('input[type="text"].postInput').value = ""
+                        document.querySelector('input[type="file"]#post_pic').value = ""
+                        document.querySelector('.fileNamedisplay').innerHTML = "No File Selected"
+
                         postImageLink = ""
                     }, 500)
                 }
@@ -119,28 +127,6 @@ var User = {
         }
 
 
-
-
-        var pPicture
-
-        if (firebase.auth().currentUser.photoURL !== null) {
-            pPicture = firebase.auth().currentUser.photoURL
-        } else {
-            pPicture = '../assets/img/defaultAvatar.png'
-        }
-
-        function displayTime() {
-            var str = "";
-
-            const d = new Date();
-            var hours = d.getHours()
-            var minutes = d.getMinutes()
-            if (minutes < 10) {
-                minutes = "0" + minutes
-            }
-            str = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()} - ` + hours + ":" + minutes;
-            return str;
-        }
 
         function validateImage() {
             if (document.querySelector('input[type="file"]#post_pic').value.split(/(\\|\/)/g).pop() == '') {
@@ -153,11 +139,25 @@ var User = {
                 }
             }
         }
-
-
-
-
     },
+
+    group: {
+        sendMessage: function() {
+            if (document.querySelector('input[type="text"].group_messageInput').value == "" || document.querySelector('input[type="text"].group_messageInput').value == " ") {
+                return "";
+            } else {
+                firebase.database().ref("messages").push().set({
+                    "sender": firebase.auth().currentUser.displayName,
+                    "senderProfile": pPicture,
+                    "senderUid": firebase.auth().currentUser.uid,
+                    "timestamp": displayTime(),
+                    "message": document.querySelector('input[type="text"].group_messageInput').value
+                });
+                document.querySelector('input[type="text"].group_messageInput').value = ""
+            }
+        },
+    },
+
     closePopup: function() {
         popupBody.classList.remove('active')
     },
@@ -199,6 +199,22 @@ var User = {
     }
 }
 
+var pPicture
+
+
+function displayTime() {
+    var str = "";
+
+    const d = new Date();
+    var hours = d.getHours()
+    var minutes = d.getMinutes()
+    if (minutes < 10) {
+        minutes = "0" + minutes
+    }
+    str = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()} - ` + hours + ":" + minutes;
+    return str;
+}
+
 var addPostPhoto = function() {
     document.querySelector('input[type="file"]#post_pic').click()
 }
@@ -232,13 +248,29 @@ var Content = {
                 document.querySelector(".notifications").removeChild(div);
             }, 200);
         }, 2000);
-    }
+    },
+    sounds: function(sound) {
+        switch (sound) {
+            case "notification":
+                var audio = new Audio('../assets/sounds/notification.mp3')
+                audio.play()
+        }
+    },
+
+    groupChatOpen: true,
 }
 
 firebase.auth().onAuthStateChanged((user) => {
     if (!user) {
         location.href = "../auth";
     } else {
+
+        if (firebase.auth().currentUser.photoURL !== null) {
+            pPicture = firebase.auth().currentUser.photoURL
+        } else {
+            pPicture = '../assets/img/defaultAvatar.png'
+        }
+
         document.querySelectorAll('.displayName').forEach((e) => {
             if (user.displayName === null) {
                 return;
@@ -256,7 +288,6 @@ firebase.auth().onAuthStateChanged((user) => {
         })
         user.providerData.forEach(function(e) {
             var provider = `${e.providerId}`
-            console.log(provider)
             if (provider !== "password") {
                 document.querySelector('.dropdown .content .settings .elements').innerHTML = `
                 <div class="elements">
@@ -267,9 +298,36 @@ firebase.auth().onAuthStateChanged((user) => {
                 </div>`;
             }
         });
-        this.setTimeout(() => {
+        window.setTimeout(() => {
             document.querySelector('.loader').style.opacity = "0"
             document.querySelector('.loader').style.pointerEvents = "none"
-        }, 500)
+
+            Content.groupChatOpen = false
+        }, 1000)
     }
 });
+
+function groupChat() {
+    if (Content.groupChatOpen == true) {
+        Content.groupChatOpen = false
+    } else {
+        Content.groupChatOpen = true
+    }
+}
+
+
+document.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+        if ($(document.querySelector('input[type="text"].group_messageInput')).is(':focus')) {
+            User.group.sendMessage()
+        }
+    }
+});
+
+window.setInterval(() => {
+    if (Content.groupChatOpen == true) {
+        document.querySelector('.groupChat').classList.add('active')
+    } else {
+        document.querySelector('.groupChat').classList.remove('active')
+    }
+}, 31.25)
