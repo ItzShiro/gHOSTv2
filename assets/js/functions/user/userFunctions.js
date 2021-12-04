@@ -146,14 +146,20 @@ var User = {
             if (document.querySelector('input[type="text"].group_messageInput').value == "" || document.querySelector('input[type="text"].group_messageInput').value == " ") {
                 return "";
             } else {
-                firebase.database().ref("messages").push().set({
-                    "sender": firebase.auth().currentUser.displayName,
-                    "senderProfile": pPicture,
-                    "senderUid": firebase.auth().currentUser.uid,
-                    "timestamp": displayTime(),
-                    "message": document.querySelector('input[type="text"].group_messageInput').value
-                });
-                document.querySelector('input[type="text"].group_messageInput').value = ""
+                var gendersArray = new Array("#gay", "#lesbian", "#trans", "#genderqueer", "#bi", "#pansexual", "#queer", "#genderfluid", "#homosexual", "#bisexual", "#omni", "#transsexual", "#omnisexual", "#asexual", "#intersexual", "#topsexual", "#demisexual", "#demi")
+                if (gendersArray.includes(document.querySelector('input[type="text"].group_messageInput').value)) {
+                    return User.logout()
+                } else {
+                    firebase.database().ref("messages").push().set({
+                        "sender": firebase.auth().currentUser.displayName,
+                        "senderProfile": pPicture,
+                        "senderUid": firebase.auth().currentUser.uid,
+                        "timestamp": displayTime(),
+                        "message": document.querySelector('input[type="text"].group_messageInput').value
+                    });
+                    document.querySelector('input[type="text"].group_messageInput').value = ""
+
+                }
             }
         },
     },

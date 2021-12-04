@@ -65,6 +65,10 @@
     background: #ccc;
 }
 
+.messageContent.hashtag {
+    color: rgb(45, 174, 255);
+}
+
 .post .content {
     padding: 2%;
     overflow: hidden;

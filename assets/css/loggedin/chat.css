@@ -192,3 +192,20 @@
 .groupChat .message.byMe .thumbnail .messageInfo {
     margin-right: 0px;
 }
+
+.messageContent red {
+    color: red;
+}
+
+.messageContent blue {
+    color: blue;
+}
+
+.messageContent pink {
+    color: pink;
+}
+
+.messageContent c {
+    display: block;
+    transform: skew(-15deg);
+}

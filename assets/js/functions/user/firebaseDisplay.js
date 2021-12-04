@@ -68,6 +68,11 @@ firebase.database().ref("messages").on("child_added", function(snapshot) {
 
     var user = firebase.auth().currentUser
     var html = "";
+    var classes = "";
+
+    if (snapshot.val().message.startsWith("#")) {
+        classes = "hashtag"
+    }
     if (snapshot.val().senderUid == user.uid) {
         html = `
         <div id="${snapshot.key}" class="messageContainer byMe">
@@ -78,7 +83,7 @@ firebase.database().ref("messages").on("child_added", function(snapshot) {
                                 <span>${snapshot.val().timestamp}</span>
                             </div><img src="${snapshot.val().senderProfile}" alt="">
                         </div>
-                        <div class="messageContent">
+                        <div class="messageContent ${classes}">
                         ${snapshot.val().message}
                         </div>
                     </div>
@@ -94,12 +99,11 @@ firebase.database().ref("messages").on("child_added", function(snapshot) {
                                 <span>${snapshot.val().timestamp}</span>
                             </div>
                         </div>
-                        <div class="messageContent">
+                        <div class="messageContent ${classes}">
                         ${snapshot.val().message}
                         </div>
                     </div>
                 </div>`
-
         if (Content.groupChatOpen == false) {
             Content.notification(snapshot.val().sender, snapshot.val().message)
             Content.sounds("notification")
