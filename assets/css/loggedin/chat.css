@@ -18,7 +18,7 @@
 
 .groupChat {
     width: 100%;
-    height: calc(100% - 65px);
+    height: 100%;
     position: absolute;
     bottom: 0;
     right: 0;
@@ -137,10 +137,8 @@
     width: fit-content
 }
 
-.groupChat .thumbnail img {
-    width: 40px;
+.groupChat .thumbnail .avatar {
     margin-right: 7px;
-    border-radius: 50%;
 }
 
 .groupChat .message.byMe {
@@ -148,7 +146,7 @@
     text-align: right;
 }
 
-.groupChat .message.byMe .thumbnail img {
+.groupChat .message.byMe .avatar {
     margin-right: 0;
     margin-left: 7px;
 }

@@ -1,5 +1,4 @@
 //Its just a file to make a chat/posts display
-
 firebase.database().ref("posts").on("child_added", function(snapshot) {
 
     var user = firebase.auth().currentUser
@@ -14,9 +13,10 @@ firebase.database().ref("posts").on("child_added", function(snapshot) {
     }
 
     if (snapshot.val().senderUid == user.uid) {
+
         html = `<div  id="${snapshot.key}" class="post">
         <div class="thumbnail">
-            <div class="avatar">
+            <div onclick="User.openProfile('${snapshot.val().senderUid}')" class="avatar">
                 <img src="${snapshot.val().senderProfile}" alt="profilePic">
             </div>
             <div class="text">
@@ -40,9 +40,9 @@ firebase.database().ref("posts").on("child_added", function(snapshot) {
         </div>
     </div>`
     } else {
-        html = `<div data-id="${snapshot.key}" class="post">
+        html = `<div id="${snapshot.key}" class="post">
         <div class="thumbnail">
-          <div class="avatar">
+          <div onclick="User.openProfile('${snapshot.val().senderUid}')" class="avatar">
             <img src="${snapshot.val().senderProfile}" alt="profilePic">
           </div>
           <div class="text">
@@ -59,7 +59,7 @@ firebase.database().ref("posts").on("child_added", function(snapshot) {
         </div>`
     }
 
-    document.querySelector('.posts .content').insertAdjacentHTML('afterbegin', html);
+    document.querySelector('.bodyContent>.posts>.content').insertAdjacentHTML('afterbegin', html);
 
 })
 
@@ -81,7 +81,10 @@ firebase.database().ref("messages").on("child_added", function(snapshot) {
                             <div class="messageInfo">
                                 ${snapshot.val().sender}
                                 <span>${snapshot.val().timestamp}</span>
-                            </div><img src="${snapshot.val().senderProfile}" alt="">
+                            </div>
+                            <div onclick="User.openProfile('${snapshot.val().senderUid}')" class="avatar avatar40">
+                                <img src="${snapshot.val().senderProfile}" alt="">
+                            </div>
                         </div>
                         <div class="messageContent ${classes}">
                         ${snapshot.val().message}
@@ -93,7 +96,9 @@ firebase.database().ref("messages").on("child_added", function(snapshot) {
         <div id="${snapshot.key}" class="messageContainer">
                     <div class="message">
                         <div class="thumbnail">
-                        <img src="${snapshot.val().senderProfile}" alt="">
+                        <div onclick="User.openProfile('${snapshot.val().senderUid}')" class="avatar avatar40">
+                                <img src="${snapshot.val().senderProfile}" alt="">
+                            </div>
                             <div class="messageInfo">
                                 ${snapshot.val().sender}
                                 <span>${snapshot.val().timestamp}</span>
@@ -117,6 +122,7 @@ firebase.database().ref("messages").on("child_added", function(snapshot) {
 
 function deleteMessage(type, self) {
     firebase.database().ref(type).child(self).remove();
+    firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/posts/").child(self).remove();
 }
 
 

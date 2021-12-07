@@ -1,5 +1,12 @@
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
+        firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/data").set({
+            "displayName": firebase.auth().currentUser.displayName,
+            "email": firebase.auth().currentUser.email,
+            "uid": firebase.auth().currentUser.uid,
+            "profilePicture": firebase.auth().currentUser.photoURL,
+            "backgroundPicture": null
+        });
         window.setTimeout(() => {
             location.href = '../loggedin'
         }, 2000)
@@ -21,13 +28,17 @@ function register(email, password, username) {
                         console.error(error)
                     });
                 firebase.auth().currentUser.updateProfile({
-                    displayName: username
+                    displayName: username,
+                    photoUrl: "https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPPic.png?alt=media&token=fa2aea88-e0ad-44a4-9920-0e1ac35909ce"
                 }).then(() => {
                     console.log(`Changed displayName to: ${username}`)
                 }).catch((error) => {
                     console.log("An Error occured while changing displayName")
                     console.log(error)
                 });
+
+
+
                 var user = userCredential.user;
                 // ...
             })

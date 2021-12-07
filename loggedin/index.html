@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../assets/css/loggedin/base.css">
     <link rel="stylesheet" href="../assets/css/loggedin/posts.css">
     <link rel="stylesheet" href="../assets/css/loggedin/chat.css">
+    <link rel="stylesheet" href="../assets/css/loggedin/profiles.css">
 
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
@@ -21,6 +22,7 @@
 </head>
 
 <body>
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
 
     <div class="loader">
@@ -37,8 +39,12 @@
 
 
     <nav>
+        <div class="ver">
+            <span>gHOST v2.0.6</span>
+            <span class="beta">BETA</span>
+        </div>
         <div class="midIcons">
-            <div class="icon">
+            <div onclick="location.href='./'" class="icon">
                 <i class="fas fa-home"> </i>
                 <div class="label">Home</div>
             </div>
@@ -46,20 +52,32 @@
                 <i class="fas fa-users"></i>
                 <div class="label">Group</div>
             </div>
+            <div onclick="User.openProfile(firebase.auth().currentUser.uid)" class="icon">
+                <i class="fa fa-user"></i>
+                <div class="label">Profile</div>
+            </div>
+            <div onclick="Content.highlightSettings()" class="icon">
+                <i class="fas fa-cog"></i>
+                <div class="label">Settings</div>
+            </div>
         </div>
         <div class="rightIcons">
-            <div class="profileMini">
-                <img src="../assets/img/defaultAvatar.png" class="avatarPicture" alt="profilePic" />
+            <div onclick="User.openProfile(firebase.auth().currentUser.uid)" class="profileMini">
+                <div class="avatar avatar45">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPPic.png?alt=media&token=fa2aea88-e0ad-44a4-9920-0e1ac35909ce" class="avatarPicture" alt="profilePic" />
+                </div>
                 <span class="displayName">noname</span>
             </div>
             <div class="Notifications">
-                <div class="icon"><i class="fas fa-bell"></i></div>
+                <div class="icon" style="cursor:not-allowed;"><i class="fas fa-bell"></i></div>
             </div>
             <div class="dropdown">
                 <div onclick="Content.dropdownToggle()" class="icon dropdownOpen"><i class="fas fa-caret-down"></i></div>
                 <div class="content">
-                    <section class="profile">
-                        <img src="../assets/img/defaultAvatar.png" class="avatarPicture" alt="profilePic" />
+                    <section style="cursor: pointer" class="profile" onclick="User.openProfile(firebase.auth().currentUser.uid)">
+                        <div class="avatar avatar50">
+                            <img src="https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPPic.png?alt=media&token=fa2aea88-e0ad-44a4-9920-0e1ac35909ce" class="avatarPicture" alt="profilePic" />
+                        </div>
                         <div class="text">
                             <span class="displayName">noname</span>
                             <span style="opacity: 0.6; width: 186px;">Click to see your profile</span>
@@ -101,7 +119,7 @@
             <div class="sendPost">
                 <input placeholder="Whats on your mind?" type="text" class="postInput">
                 <input onchange="writeFilename()" style="display: none;" type="file" id="post_pic" name="post_pic" accept=".jpg, .jpeg, .png"></input>
-                <button class="photoAddBtn" onclick="addPostPhoto()">Add Photo</button><br>
+                <button class="photoAddBtn" onclick="addPostPhoto()" style="cursor: pointer;">Add Photo</button><br>
                 <span><span style="margin-left: 5px; " class="fileNamedisplay">No File Selected</span>
                 <script>
                     function writeFilename() {
@@ -109,9 +127,52 @@
                     }
                 </script>
                 </span>
-                <button class="sendBtn" onclick="User.addPost()">Send</button>
+                <button class="sendBtn" onclick="User.addPost()" style="cursor: pointer;">Send</button>
             </div>
             <div class="content">
+            </div>
+        </div>
+        <div class="groupChat active">
+            <div class="content">
+                <div class="text">
+
+                </div>
+                <div class="controlls">
+                    <div class="input">
+                        <input class="group_messageInput" type="text">
+                    </div>
+                    <div class="buttons">
+                        <div onclick="User.group.sendMessage()" class="send">
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile">
+            <div class="content">
+                <div class="close" onclick="User.closeProfile()">
+                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+                <div class="top">
+                    <div class="background">
+                        <img src="https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/users%2F4p3dAIZKl9WSXpXyGlXOhyn5s692%2Fbackground.jpg?alt=media&token=e49d32f0-704c-49d8-8c51-4f92faba2611" alt="">
+                    </div>
+                    <div class="user">
+                        <div class="avatar avatar120">
+                            <img src="https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPPic.png?alt=media&token=fa2aea88-e0ad-44a4-9920-0e1ac35909ce" class="avatarPicture" alt="profilePic" />
+                        </div>
+                        <div class="text">
+                            <span class="displayName">noname</span>
+                            <span class="email">example@example.com</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="posts">
+
+                </div>
             </div>
         </div>
     </div>
@@ -122,24 +183,6 @@
             <span>Change Password</span>
             <input type="text">
             <button>Change</button>
-        </div>
-    </div>
-
-    <div class="groupChat active">
-        <div class="content">
-            <div class="text">
-
-            </div>
-            <div class="controlls">
-                <div class="input">
-                    <input class="group_messageInput" type="text">
-                </div>
-                <div class="buttons">
-                    <div onclick="User.group.sendMessage()" class="send">
-                        <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 

@@ -88,13 +88,7 @@ nav {
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
     margin-right: 10px;
     overflow: hidden;
-}
-
-.rightIcons .profileMini img {
-    width: 45px;
-    height: 45px;
-    margin-left: 5px;
-    border-radius: 50%;
+    padding-left: 7px;
 }
 
 .rightIcons .profileMini span {
@@ -151,12 +145,6 @@ hr {
     opacity: 0.6;
     margin: 1em 0;
     padding: 0;
-}
-
-.rightIcons .dropdown .content .profile img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
 }
 
 
@@ -385,4 +373,76 @@ div.hide {
     height: calc(100% - 65px);
     transform: translateY(65px);
     overflow-y: scroll;
+}
+
+.rightIcons .profileMini img {
+    width: 45px;
+}
+
+.avatar {
+    background-color: white;
+    overflow: hidden;
+    border-radius: 50%;
+    display: grid;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.avatar40 {
+    width: 40px;
+    height: 40px;
+}
+
+.avatar40 img {
+    width: 40px;
+}
+
+.avatar45 {
+    width: 45px;
+    height: 45px;
+}
+
+.avatar45 img {
+    width: 45px;
+}
+
+.avatar50 {
+    width: 50px;
+    height: 50px;
+}
+
+.avatar50 img {
+    width: 50px;
+}
+
+.avatar120 {
+    width: 120px;
+    height: 120px;
+}
+
+.avatar120 img {
+    width: 120px;
+}
+
+.ver {
+    z-index: 99999;
+    display: flex;
+    color: #ccc;
+    align-items: center;
+    position: absolute;
+    left: 20px;
+}
+
+.ver span:nth-child(1) {
+    font-weight: 600;
+}
+
+.ver .beta {
+    border: 2px #ccc solid;
+    border-radius: 5px;
+    padding: 0px 5px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-left: 5px;
+    font-size: 13px;
 }

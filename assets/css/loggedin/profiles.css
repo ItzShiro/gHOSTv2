@@ -1,0 +1,121 @@
+.bodyContent>.profile {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    z-index: 998;
+    pointer-events: none;
+    transition: 0.2s !important;
+}
+
+.bodyContent>.profile i {
+    color: #87beff;
+}
+
+.bodyContent>.profile>.content>.close {
+    position: absolute;
+    right: 5px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.bodyContent>.profile>.content {
+    position: relative;
+    width: 600px;
+    height: 100%;
+    background-color: #3b4252;
+    transform: translateX(-150%);
+    transition: 0.3s !important;
+    overflow-y: scroll;
+}
+
+.bodyContent>.profile.active {
+    background-color: rgba(0, 0, 0, 0.7);
+    pointer-events: all;
+}
+
+.bodyContent>.profile.active .content {
+    transform: translateX(0);
+}
+
+
+/*
+
+<div class="profile">
+        <div class="content">
+            <div class="top">
+                <div class="background">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/users%2F4p3dAIZKl9WSXpXyGlXOhyn5s692%2Fbackground.jpg?alt=media&token=e49d32f0-704c-49d8-8c51-4f92faba2611" alt="">
+                </div>
+                 <div class="user">
+                    <div class="avatar avatar50">
+                        <img src="https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPPic.png?alt=media&token=fa2aea88-e0ad-44a4-9920-0e1ac35909ce" class="avatarPicture" alt="profilePic" />
+                    </div>
+                    <div class="text">
+                        <span class="displayName">noname</span>
+                        <span class="email">example@example.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+*/
+
+.bodyContent .profile .content .top .background {
+    width: 100%;
+    height: 255px;
+    overflow: hidden;
+    background-color: #3b4252;
+}
+
+.bodyContent .profile .content .top .background img {
+    width: 100%;
+}
+
+.bodyContent .profile .content .top .user {
+    height: 60px;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.bodyContent .profile .content .top .user .avatar {
+    transform: translateY(-50%);
+    border: 5px #3b4252 solid;
+    border-radius: 50%;
+    margin-left: 7px;
+    margin-right: 5px;
+    cursor: auto;
+}
+
+.bodyContent .profile .avatar {
+    cursor: auto !important;
+}
+
+.bodyContent .profile .content .top .user .text {
+    color: #ccc;
+    display: flex;
+    flex-direction: column;
+}
+
+.bodyContent .profile .content .top .user .text span:nth-child(1) {
+    font-size: 23px;
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+
+.bodyContent .profile .content .top .user .text span:nth-child(2) {
+    font-size: 14px;
+    margin-top: -2px;
+    opacity: 0.5;
+}
+
+.tints {
+    color: #ccc;
+    font-size: 20px;
+}

@@ -115,6 +115,22 @@ var User = {
                             "message": document.querySelector('input[type="text"].postInput').value,
                             "postImageUrl": validateImage()
                         });
+                        firebase.database().ref("posts").on("child_added", function(snapshot) {
+
+                            if (snapshot.val().senderUid == firebase.auth().currentUser.uid) {
+                                firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/posts/" + snapshot.key).set({
+                                    "sender": firebase.auth().currentUser.displayName,
+                                    "senderProfile": pPicture,
+                                    "senderUid": firebase.auth().currentUser.uid,
+                                    "timestamp": displayTime(),
+                                    "message": document.querySelector('input[type="text"].postInput').value,
+                                    "postImageUrl": validateImage(),
+                                    "snapKey": snapshot.key
+                                });
+                            }
+
+                        })
+
 
                         document.querySelector('input[type="text"].postInput').value = ""
                         document.querySelector('input[type="file"]#post_pic').value = ""
@@ -163,9 +179,129 @@ var User = {
             }
         },
     },
-
     closePopup: function() {
         popupBody.classList.remove('active')
+
+    },
+    closeProfile: function() {
+        var profileBody = document.querySelector('.bodyContent>.profile')
+        profileBody.classList.remove('active')
+    },
+    openProfile: function(uid) {
+        var profileBody = document.querySelector('.bodyContent>.profile')
+        var profileContent = document.querySelector('.bodyContent>.profile .content')
+
+        profileBody.classList.add('active')
+
+
+
+
+
+        firebase.database().ref('users/' + uid).on('value', (snap) => {
+
+            var data = snap.val().data
+            var posts = snap.val().posts
+
+            var html = `
+            <div class="close" onclick="User.closeProfile()">
+                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            <div class="top">
+                <div class="background">
+                    <img src="${data.backgroundPicture}" alt="">
+                </div>
+                <div class="user">
+                    <div class="avatar avatar120">
+                        <img src="${data.profilePicture}" class="avatarPicture" alt="profilePic" />
+                    </div>
+                    <div class="text">
+                        <span class="displayName">${data.displayName}</span>
+                        <span class="email">${data.email}</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="posts">
+            </div>
+            
+            `
+
+            profileContent.innerHTML = html
+
+            function postDisplay() {
+                if (posts !== undefined) {
+                    Object.values(posts).forEach((e) => {
+                        //message: ""
+                        //postImageUrl: ""
+                        //sender: ""
+                        //senderProfile: ""
+                        //senderUid: ""
+                        //timestamp: ""
+
+
+                        var postHtml;
+
+                        if (e.senderUid === firebase.auth().currentUser.uid) {
+                            postHtml = `
+                            <div id="${e.snapKey}" class="post">
+                            <div class="thumbnail">
+                                <div class="avatar">
+                                    <img src="${e.senderProfile}" alt="profilePic">
+                                </div>
+                                <div class="text">
+                                    <span class="nickname">${e.sender} <span>You</span></span>
+                                    <span class="timestamp">${e.timestamp}</span>
+                                </div>
+                                <div class="dropdown">
+                                    <div onclick="deleteMessage('posts','${e.snapKey}')" class="content">
+                                        <div class="delete">
+                                            <i class="far fa-trash-alt"></i>
+                                            <span>Delete</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border"></div>
+                            <div class="content">
+                              <span class="text">${e.message}</span>
+                              <img src="${e.postImageUrl}">
+                              <div class="border"></div>
+                            </div>
+                            </div>
+    
+                            `
+                        } else { postHtml = `
+                        <div id="${e.snapKey}" class="post">
+                        <div class="thumbnail">
+                            <div class="avatar">
+                                <img src="${e.senderProfile}" alt="profilePic">
+                            </div>
+                            <div class="text">
+                                <span class="nickname">${e.sender}</span>
+                                <span class="timestamp">${e.timestamp}</span>
+                            </div>
+                        </div>
+                        <div class="border"></div>
+                        <div class="content">
+                          <span class="text">${e.message}</span>
+                          <img src="${e.postImageUrl}">
+                          <div class="border"></div>
+                        </div>
+                        </div>
+
+                        ` }
+
+                        var profilePosts = document.querySelector('.bodyContent>.profile>.content>.posts')
+                        return profilePosts.innerHTML += postHtml
+                    })
+                } else if (posts == undefined) {
+                    var profilePosts = document.querySelector('.bodyContent>.profile>.content>.posts')
+                    return profilePosts.innerHTML = "<span class='tints'>There is nothing more to show</span>"
+                }
+            }
+            postDisplay()
+
+        });
     },
     openPopup: function(thingToChange) {
         var popupBody = document.querySelector('.changePopup')
@@ -270,11 +406,32 @@ firebase.auth().onAuthStateChanged((user) => {
     if (!user) {
         location.href = "../auth";
     } else {
+        var bgPicture;
+        firebase.database().ref('users/' + firebase.auth().currentUser.uid + "/data").on('value', (snap) => {
+            bgPicture = snap.val().backgroundPicture
+        });
+        var defaultBackground = "https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPBg.jpg?alt=media&token=effd2247-db3d-45fc-8a7b-9c55164a6f44"
+
+        function defaultBG() {
+            if (bgPicture == null || bgPicture == defaultBackground) {
+                return defaultBackground;
+            } else {
+                return bgPicture;
+            }
+        }
+
+        firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/data").set({
+            "displayName": firebase.auth().currentUser.displayName,
+            "email": firebase.auth().currentUser.email,
+            "uid": firebase.auth().currentUser.uid,
+            "profilePicture": firebase.auth().currentUser.photoURL,
+            "backgroundPicture": defaultBG()
+        });
 
         if (firebase.auth().currentUser.photoURL !== null) {
             pPicture = firebase.auth().currentUser.photoURL
         } else {
-            pPicture = '../assets/img/defaultAvatar.png'
+            pPicture = 'https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPPic.png?alt=media&token=fa2aea88-e0ad-44a4-9920-0e1ac35909ce'
         }
 
         document.querySelectorAll('.displayName').forEach((e) => {
