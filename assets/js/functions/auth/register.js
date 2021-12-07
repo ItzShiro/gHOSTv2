@@ -5,7 +5,7 @@ firebase.auth().onAuthStateChanged((user) => {
             "email": firebase.auth().currentUser.email,
             "uid": firebase.auth().currentUser.uid,
             "profilePicture": firebase.auth().currentUser.photoURL,
-            "backgroundPicture": null
+            "backgroundPicture": "https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPBg.jpg?alt=media&token=effd2247-db3d-45fc-8a7b-9c55164a6f44"
         });
         window.setTimeout(() => {
             location.href = '../loggedin'

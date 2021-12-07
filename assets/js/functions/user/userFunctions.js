@@ -412,20 +412,12 @@ firebase.auth().onAuthStateChanged((user) => {
         });
         var defaultBackground = "https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPBg.jpg?alt=media&token=effd2247-db3d-45fc-8a7b-9c55164a6f44"
 
-        function defaultBG() {
-            if (bgPicture == null || bgPicture == defaultBackground) {
-                return defaultBackground;
-            } else {
-                return bgPicture;
-            }
-        }
-
         firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/data").set({
             "displayName": firebase.auth().currentUser.displayName,
             "email": firebase.auth().currentUser.email,
             "uid": firebase.auth().currentUser.uid,
             "profilePicture": firebase.auth().currentUser.photoURL,
-            "backgroundPicture": defaultBG()
+            "backgroundPicture": bgPicture
         });
 
         if (firebase.auth().currentUser.photoURL !== null) {
