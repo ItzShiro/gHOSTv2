@@ -406,13 +406,32 @@ firebase.auth().onAuthStateChanged((user) => {
     if (!user) {
         location.href = "../auth";
     } else {
+        var bgPicture;
+        firebase.database().ref('users/' + firebase.auth().currentUser.uid + "/data").on('value', (snap) => {
+            bgPicture = snap.val().backgroundPicture
+        });
         var defaultBackground = "https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPBg.jpg?alt=media&token=effd2247-db3d-45fc-8a7b-9c55164a6f44"
+
+        console.log(bgPicture == defaultBackground || null || undefined);
+
+        function defaultBG() {
+            if (bgPicture == defaultBackground) {
+                return defaultBackground;
+            } else if (bgPicture == null) {
+                return defaultBackground;
+            } else if (bgPicture == undefined) {
+                return defaultBackground;
+            } else {
+                return bgPicture
+            }
+        }
 
         firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/data").set({
             "displayName": firebase.auth().currentUser.displayName,
             "email": firebase.auth().currentUser.email,
             "uid": firebase.auth().currentUser.uid,
-            "profilePicture": firebase.auth().currentUser.photoURL
+            "profilePicture": firebase.auth().currentUser.photoURL,
+            "backgroundPicture": defaultBG()
         });
 
         if (firebase.auth().currentUser.photoURL !== null) {
