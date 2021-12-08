@@ -48,3 +48,18 @@ function login(email, password) {
             }
         });
 }
+
+function anonLogin() {
+    firebase.auth().signInAnonymously()
+        .then(() => {
+            // Signed in..
+        })
+        .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ...
+
+            console.log(errorCode)
+        });
+
+}
