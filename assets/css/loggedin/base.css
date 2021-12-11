@@ -54,6 +54,7 @@ nav {
     display: flex;
     position: absolute;
     right: 0px;
+    z-index: 998;
 }
 
 .rightIcons .icon {
