@@ -1,10 +1,115 @@
+body {
+    display: flex;
+    justify-content: center;
+}
+
 .rightIcons a {
     color: #ccc;
     text-decoration: none;
     background-color: #434c5e;
-    padding: 5px 10px;
+    padding: 7px 12px;
     border-radius: 7px;
     margin-right: 7px;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     letter-spacing: 2px;
+}
+
+
+/*
+
+<div style="overflow: hidden;" class="bodyContent">
+        <div class="box">
+            <div class="thumbnail">
+                Hi There!
+            </div>
+            <div class="buttons">
+                <div class="slide"></div>
+                <button class="login">Login</button>
+                <button class="register">Register</button>
+                <a href="" class="forgot">Forgot your password?</a>
+            </div>
+        </div>
+</div>
+
+*/
+
+.box {
+    width: 400px;
+    height: 200px;
+    background-color: #4c566a;
+    border-radius: 0px 0px 20px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #ccc;
+    text-align: center;
+}
+
+.box .slide {
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    background-color: #4c566a;
+    border-radius: 7px;
+    pointer-events: none;
+    transition: 0.2s;
+    top: 0;
+    left: 25%;
+    opacity: 0;
+    transition-delay: 0.03s;
+    z-index: 0;
+}
+
+.box .buttons {
+    height: 75px;
+    width: 304.78px;
+    position: relative;
+}
+
+.box button {
+    width: 150px;
+    height: 45px;
+    color: #ccc;
+    background-color: #434c5e;
+    border: none;
+    border-radius: 7px;
+    font-size: 20px;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+
+.box button:hover~.slide {
+    width: 150px;
+    height: 45px;
+    opacity: 0.5;
+}
+
+.box button:nth-child(1):hover~.slide {
+    left: 0%;
+}
+
+.box button:nth-child(2):hover~.slide {
+    left: 50%;
+}
+
+.box a:hover~.slide {
+    width: 227.53px;
+    height: 28px;
+    opacity: 0.5;
+    top: calc(100% - 28px);
+    left: 50%;
+    transform: translatex(-50%);
+}
+
+.box .thumbnail {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.box a {
+    font-size: 20px;
+    color: #ccc;
+    text-decoration: none;
 }
