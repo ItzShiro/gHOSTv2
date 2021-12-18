@@ -4,9 +4,9 @@ body {
 }
 
 .rightIcons a {
-    color: #ccc;
+    color: var(--text);
     text-decoration: none;
-    background-color: #434c5e;
+    background-color: var(--color3);
     padding: 7px 12px;
     border-radius: 7px;
     margin-right: 7px;
@@ -36,13 +36,13 @@ body {
 .box {
     width: 400px;
     height: 200px;
-    background-color: #4c566a;
+    background-color: var(--color4);
     border-radius: 0px 0px 20px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    color: #ccc;
+    color: var(--text);
     text-align: center;
 }
 
@@ -50,7 +50,7 @@ body {
     width: 0px;
     height: 0px;
     position: absolute;
-    background-color: #4c566a;
+    background-color: var(--color4);
     border-radius: 7px;
     pointer-events: none;
     transition: 0.2s;
@@ -70,8 +70,8 @@ body {
 .box button {
     width: 150px;
     height: 45px;
-    color: #ccc;
-    background-color: #434c5e;
+    color: var(--text);
+    background-color: var(--color3);
     border: none;
     border-radius: 7px;
     font-size: 20px;
@@ -110,7 +110,7 @@ body {
 
 .box a {
     font-size: 20px;
-    color: #ccc;
+    color: var(--text);
     text-decoration: none;
 }
 

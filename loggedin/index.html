@@ -13,12 +13,18 @@
     <link rel="stylesheet" href="../assets/css/loggedin/posts.css">
     <link rel="stylesheet" href="../assets/css/loggedin/chat.css">
     <link rel="stylesheet" href="../assets/css/loggedin/profiles.css">
+    <link rel="stylesheet" href="../assets/css/palette.css">
 
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style class="palette">
+
+    </style>
+
 </head>
 
 <body>
@@ -120,8 +126,17 @@
                                 <a onclick="User.deleteStatus()" href="#">Delete Status</a>
                             </span>
 
-                        </div>
-                        <hr />
+                            <div class="thumbnail">
+                                <span><i class="fa fa-palette"></i> Appearance</span>
+                            </div>
+                            <div class="elements">
+                                <span>
+                                    <i class="far fa-moon"></i> 
+                                    <a onclick="User.changePalette()" href="#">Light/Dark Theme</a>
+                                </span>
+
+                            </div>
+                            <hr />
                     </section>
 
                     <section class="operations">
@@ -130,9 +145,9 @@
                             Logout
                         </button>
                     </section>
+                    </div>
                 </div>
             </div>
-        </div>
     </nav>
     <div class="bodyContent">
         <div class="posts">
@@ -152,27 +167,24 @@
             <div class="content">
             </div>
         </div>
-        <div class="groupChat active">
-            <div class="content">
-                <div class="text">
+    </div>
+    <div class="groupChat active">
+        <div class="content">
+            <div class="text">
 
+            </div>
+            <div class="controlls">
+                <div class="input">
+                    <input class="group_messageInput" type="text">
                 </div>
-                <div class="controlls">
-                    <div class="input">
-                        <input class="group_messageInput" type="text">
-                    </div>
-                    <div class="buttons">
-                        <div onclick="User.group.sendMessage()" class="send">
-                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                        </div>
+                <div class="buttons">
+                    <div onclick="User.group.sendMessage()" class="send">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
-
     <div class="profile">
         <div class="content">
             <div class="close" onclick="User.closeProfile()">

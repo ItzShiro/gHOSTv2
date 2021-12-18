@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    color: #ccc;
+    color: var(--text);
     font-family: 'Poppins', sans-serif;
 }
 
@@ -14,7 +14,7 @@ body {
 }
 
 body {
-    background: #3B4252;
+    background: var(--color2);
 }
 
 .login {
@@ -75,7 +75,7 @@ body {
     width: 81%;
     height: 5px;
     border-radius: 5px;
-    background: #4C566A;
+    background: var(--color4);
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
@@ -88,7 +88,7 @@ body {
 }
 
 i {
-    color: #87beff;
+    color: var(--icons);
 }
 
 .input input:focus+.placeholder,
@@ -117,7 +117,7 @@ i {
     margin-left: 15px;
     border-radius: 7px;
     border: none;
-    background: #434C5E;
+    background: var(--color3);
     font-size: 26px;
     font-weight: 700;
     letter-spacing: 4px;

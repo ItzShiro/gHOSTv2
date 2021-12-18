@@ -18,7 +18,7 @@
 
 .groupChat {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 65px);
     position: absolute;
     bottom: 0;
     right: 0;
@@ -32,20 +32,20 @@
 }
 
 .groupChat i {
-    color: #87beff;
+    color: var(--icons);
 }
 
 .groupChat .content {
     position: relative;
     width: 600px;
     height: 100%;
-    background-color: #3b4252;
+    background-color: var(--color2);
     transform: translateX(-150%);
     transition: 0.3s;
 }
 
 .groupChat.active {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: var(--fog);
     pointer-events: all;
 }
 
@@ -70,10 +70,10 @@
     width: 100%;
     height: 40px;
     border-radius: 55px;
-    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--bar_boxShadow);
     border: none;
-    background-color: #434c5e;
-    color: #ccc;
+    background-color: var(--color3);
+    color: var(--text);
     padding: 15px;
 }
 
@@ -85,12 +85,12 @@
 }
 
 .groupChat .content .send {
-    background-color: #434c5e;
+    background-color: var(--color3);
     height: 40px;
     width: 40px;
     border-radius: 55px;
-    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
-    color: #87beff;
+    box-shadow: var(--bar_boxShadow);
+    color: var(--icons);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -117,9 +117,9 @@
 }
 
 .groupChat .message {
-    background: #434C5E;
+    background: var(--color3);
     padding: 10px;
-    color: #ccc;
+    color: var(--text);
     display: grid;
     /*flex-direction: column;*/
     margin-bottom: 10px;
@@ -160,7 +160,7 @@
     display: block;
     height: 1px;
     border: 0;
-    border-top: 2px solid #ccc;
+    border-top: 2px solid var(--text);
     opacity: 0.6;
     padding: 0;
     margin: 0;

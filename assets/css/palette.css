@@ -1,0 +1,39 @@
+/*
+
+######################
+#========Light=======#
+######################
+
+
+:root {
+    --color1: #c0c2ce;
+    --color2: #d2d4dc;
+    --color3: #e5e6eb;
+    --color4: #f8f8fa;
+    --color5: tomato;
+    --bar_boxShadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
+    --fog: rgba(0, 0, 0, 0.6);
+    --loader-icons: white;
+    --icons: #1e1d1e;
+    --text: #000;
+}
+
+
+
+######################
+#========Dark========#
+######################
+*/
+
+:root {
+    --color1: #2E3440;
+    --color2: #3B4252;
+    --color3: #434C5E;
+    --color4: #4C566A;
+    --color5: tomato;
+    --bar_boxShadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
+    --fog: rgba(0, 0, 0, 0.6);
+    --loader-icons: white;
+    --icons: #87BEFF;
+    --text: #ccc;
+}

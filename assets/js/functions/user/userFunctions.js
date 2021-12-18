@@ -111,6 +111,10 @@ var User = {
 
 
     },
+    changePalette: function() {
+        firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/appearance/lightTheme").set(!Content.lightTheme)
+
+    },
     addPost: function() {
 
 
@@ -408,6 +412,7 @@ var Content = {
         }, 1000)
         return this;
     },
+    lightTheme: null,
     notification: function(thumbnail, content) {
         var content = `
       <div class="notification">
@@ -440,13 +445,49 @@ firebase.auth().onAuthStateChanged((user) => {
     if (!user) {
         location.href = "../auth";
     } else {
+
+        firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/").on('value', (snap) => {
+            var appearance = snap.val().appearance
+
+            if (appearance == undefined) {
+                firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/appearance/lightTheme").set(false)
+            }
+        })
+
+        firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/appearance/lightTheme").on('value', (snap) => {
+            console.log(snap.val())
+            if (snap.val() == true) {
+                Content.lightTheme = true
+                document.querySelector('.palette').innerHTML = `
+                
+                :root {
+                    --color1: #c0c2ce;
+                    --color2: #d2d4dc;
+                    --color3: #e5e6eb;
+                    --color4: #f8f8fa;
+                    --color5: tomato;
+                   --bar_boxShadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
+                    --fog: rgba(0, 0, 0, 0.6);
+                    --loader-icons: white;
+                   --icons: #1e1d1e;
+                    --text: #000;
+                }
+                
+                `
+            } else {
+                Content.lightTheme = false
+                document.querySelector('.palette').innerHTML = ``
+            }
+        })
+
+
+
+
         var bgPicture;
         firebase.database().ref('users/' + firebase.auth().currentUser.uid + "/data").on('value', (snap) => {
             bgPicture = snap.val().backgroundPicture
         });
         var defaultBackground = "https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPBg.jpg?alt=media&token=effd2247-db3d-45fc-8a7b-9c55164a6f44"
-
-        console.log(bgPicture == defaultBackground || null || undefined);
 
         function defaultBG() {
             if (bgPicture == defaultBackground) {
@@ -527,6 +568,7 @@ document.addEventListener("keyup", function(event) {
 });
 
 window.setInterval(() => {
+
     if (Content.groupChatOpen == true) {
         document.querySelector('.groupChat').classList.add('active')
     } else {

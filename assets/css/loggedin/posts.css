@@ -1,14 +1,14 @@
 .post {
     width: 512px;
     height: auto;
-    background: #434C5E;
+    background: var(--color3);
     border-radius: 12px;
     overflow: hidden;
     margin-bottom: 10px;
 }
 
 .post * {
-    color: #ccc;
+    color: var(--text);
 }
 
 .post .thumbnail {
@@ -62,7 +62,7 @@
     margin-left: 2%;
     width: 96%;
     height: 2px;
-    background: #ccc;
+    background: var(--text);
 }
 
 .messageContent.hashtag {
@@ -89,7 +89,7 @@
 
 .post .content .border {
     height: 10px;
-    background: #434C5E;
+    background: var(--color3);
     width: 100%;
     position: absolute;
     bottom: -5px;
@@ -113,13 +113,13 @@
             </div>*/
 
 .sendPost * {
-    color: #ccc;
+    color: var(--text);
 }
 
 .sendPost {
     width: 512px;
     height: 135px;
-    background: #434C5E;
+    background: var(--color3);
     border-radius: 12px;
     overflow: hidden;
     margin-bottom: 10px;
@@ -133,7 +133,7 @@
     height: 65px;
     border: none;
     font-size: 20px;
-    background-color: #2e3440;
+    background-color: var(--color1);
 }
 
 .sendPost .sendBtn {
@@ -147,7 +147,7 @@
     bottom: 5px;
     border-radius: 5px;
     border: none;
-    background-color: #2e3440;
+    background-color: var(--color1);
 }
 
 .posts {
@@ -165,7 +165,7 @@
     letter-spacing: 2px;
     border-radius: 5px;
     border: none;
-    background-color: #2e3440;
+    background-color: var(--color1);
     margin-top: 2px;
     margin-left: 5px;
 }
@@ -204,6 +204,6 @@
 
 .post .thumbnail .dropdown:hover .content span,
 .post .thumbnail .dropdown:hover .content i {
-    color: tomato;
+    color: var(--color5);
     transform: translateX(3px);
 }
