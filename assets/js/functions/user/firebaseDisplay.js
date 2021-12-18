@@ -14,7 +14,7 @@ firebase.database().ref("posts").on("child_added", function(snapshot) {
 
     if (snapshot.val().senderUid == user.uid) {
 
-        html = `<div  id="${snapshot.key}" class="post">
+        html = `<section  id="${snapshot.key}" class="post">
         <div class="thumbnail">
             <div onclick="User.openProfile('${snapshot.val().senderUid}')" class="avatar">
                 <img src="${snapshot.val().senderProfile}" alt="profilePic">
@@ -38,9 +38,9 @@ firebase.database().ref("posts").on("child_added", function(snapshot) {
           ${postImage()}
           <div class="border"></div>
         </div>
-    </div>`
+    </section>`
     } else {
-        html = `<div id="${snapshot.key}" class="post">
+        html = `<section id="${snapshot.key}" class="post">
         <div class="thumbnail">
           <div onclick="User.openProfile('${snapshot.val().senderUid}')" class="avatar">
             <img src="${snapshot.val().senderProfile}" alt="profilePic">
@@ -56,7 +56,7 @@ firebase.database().ref("posts").on("child_added", function(snapshot) {
           ${postImage()}
           <div class="border"></div>
         </div>
-        </div>`
+        </section>`
     }
 
     document.querySelector('.bodyContent>.posts>.content').insertAdjacentHTML('afterbegin', html);

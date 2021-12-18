@@ -1,6 +1,6 @@
-.bodyContent>.profile {
+body>.profile {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 60px);
     position: absolute;
     bottom: 0;
     right: 0;
@@ -13,18 +13,19 @@
     transition: 0.2s !important;
 }
 
-.bodyContent>.profile i {
+body>.profile i {
     color: #87beff;
 }
 
-.bodyContent>.profile>.content>.close {
+body>.profile>.content>.close {
     position: absolute;
     right: 5px;
     font-size: 30px;
     cursor: pointer;
+    top: 5px;
 }
 
-.bodyContent>.profile>.content {
+body>.profile>.content {
     position: relative;
     width: 600px;
     height: 100%;
@@ -34,12 +35,12 @@
     overflow-y: scroll;
 }
 
-.bodyContent>.profile.active {
+body>.profile.active {
     background-color: rgba(0, 0, 0, 0.7);
     pointer-events: all;
 }
 
-.bodyContent>.profile.active .content {
+body>.profile.active .content {
     transform: translateX(0);
 }
 
@@ -67,24 +68,24 @@
 
 */
 
-.bodyContent .profile .content .top .background {
+body .profile .content .top .background {
     width: 100%;
     height: 255px;
     overflow: hidden;
     background-color: #3b4252;
 }
 
-.bodyContent .profile .content .top .background img {
+body .profile .content .top .background img {
     width: 100%;
 }
 
-.bodyContent .profile .content .top .user {
+body .profile .content .top .user {
     height: 60px;
     display: flex;
     margin-bottom: 10px;
 }
 
-.bodyContent .profile .content .top .user .avatar {
+body .profile .content .top .user .avatar {
     transform: translateY(-50%);
     border: 5px #3b4252 solid;
     border-radius: 50%;
@@ -93,23 +94,23 @@
     cursor: auto;
 }
 
-.bodyContent .profile .avatar {
+body .profile .avatar {
     cursor: auto !important;
 }
 
-.bodyContent .profile .content .top .user .text {
+body .profile .content .top .user .text {
     color: #ccc;
     display: flex;
     flex-direction: column;
 }
 
-.bodyContent .profile .content .top .user .text span:nth-child(1) {
+body .profile .content .top .user .text span:nth-child(1) {
     font-size: 23px;
     font-weight: 500;
     letter-spacing: 2px;
 }
 
-.bodyContent .profile .content .top .user .text span:nth-child(2) {
+body .profile .content .top .user .text span:nth-child(2) {
     font-size: 14px;
     margin-top: -2px;
     opacity: 0.5;

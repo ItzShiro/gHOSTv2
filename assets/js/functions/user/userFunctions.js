@@ -68,6 +68,49 @@ var User = {
 
 
     },
+    changeStatus: function(status) {
+        this.closePopup()
+        if (status.length !== 0) {
+            if (status.length <= 36) {
+                firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/data/status").set(status).then(() => {
+                    Content.notification("Success", "Your Status has been changed.")
+                })
+            } else {
+                Content.notification("Error", "Your Status cannot be longer than 36 letters")
+            }
+        } else {
+            Content.notification("Error", "Your Status cannot be empty")
+        }
+    },
+    deleteStatus: function() {
+        firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/data/status").set("<c>No status</c>").then(() => {
+            Content.notification("Success", "Your Status has been deleted.")
+        })
+    },
+    changeBg: function() {
+        popupBody.classList.remove('active')
+        let fileUpload = document.querySelector('input[type="file"]#profile_pic')
+
+        firebase.storage().ref('users/' + firebase.auth().currentUser.uid + '/background.jpg').put(fileUpload.files[0]).then(() => {
+            console.log("Successfully Uploaded");
+            firebase.storage().ref('users/' + firebase.auth().currentUser.uid + '/background.jpg').getDownloadURL().then(url => {
+                firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/data/backgroundPicture").set(url)
+                    .then(() => {
+                        console.log(`Changed Profile Background`)
+                        Content.notification("Succsess", "Your Background has been changed")
+
+                    }).catch((error) => {
+                        console.log("An Error occured while changing avatar")
+                        Content.notification("Error", "An Error occured while changing Avatar")
+                        console.log(error)
+                    });
+            })
+        }).catch(error => {
+            console.log(error.code)
+        })
+
+
+    },
     addPost: function() {
 
 
@@ -102,9 +145,6 @@ var User = {
                 if (document.querySelector('input[type="text"].postInput').value.length == 0 && postImageLink == null) {
                     Content.notification("Error", "Please add something to your post first")
                 } else {
-
-                    console.log()
-
                     Content.notification("Success", "Added your post")
                     window.setTimeout(() => {
                         firebase.database().ref("posts").push().set({
@@ -115,21 +155,6 @@ var User = {
                             "message": document.querySelector('input[type="text"].postInput').value,
                             "postImageUrl": validateImage()
                         });
-                        firebase.database().ref("posts").on("child_added", function(snapshot) {
-
-                            if (snapshot.val().senderUid == firebase.auth().currentUser.uid) {
-                                firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/posts/" + snapshot.key).set({
-                                    "sender": firebase.auth().currentUser.displayName,
-                                    "senderProfile": pPicture,
-                                    "senderUid": firebase.auth().currentUser.uid,
-                                    "timestamp": displayTime(),
-                                    "message": document.querySelector('input[type="text"].postInput').value,
-                                    "postImageUrl": validateImage(),
-                                    "snapKey": snapshot.key
-                                });
-                            }
-
-                        })
 
 
                         document.querySelector('input[type="text"].postInput').value = ""
@@ -184,81 +209,86 @@ var User = {
 
     },
     closeProfile: function() {
-        var profileBody = document.querySelector('.bodyContent>.profile')
+        var contentBody = document.querySelector('.bodyContent')
+        var profileBody = document.querySelector('body>.profile')
         profileBody.classList.remove('active')
+        contentBody.style.overflowY = "scroll"
     },
     openProfile: function(uid) {
-        var profileBody = document.querySelector('.bodyContent>.profile')
-        var profileContent = document.querySelector('.bodyContent>.profile .content')
+        var contentBody = document.querySelector('.bodyContent')
+        var profileBody = document.querySelector('body>.profile')
+        var profileContent = document.querySelector('body>.profile .content')
 
         profileBody.classList.add('active')
+        contentBody.style.overflowY = "hidden"
+        firebase.database().ref(`users/${uid}/data`).on('value', (snap) => {
+            var data = snap.val()
+            firebase.database().ref('posts/').on('value', (snap) => {
 
+                var posts = snap.val()
 
+                function checkStatus() {
+                    if (data.status !== undefined) {
+                        return data.status
+                    } else {
+                        return "No Status"
+                    }
+                }
 
+                function checkBgPic() {
+                    if (data.backgroundPicture !== undefined) {
+                        return data.backgroundPicture
+                    } else {
+                        return "https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPBg.jpg?alt=media&token=effd2247-db3d-45fc-8a7b-9c55164a6f44";
+                    }
+                }
 
-
-        firebase.database().ref('users/' + uid).on('value', (snap) => {
-
-            var data = snap.val().data
-            var posts = snap.val().posts
-
-            var html = `
-            <div class="close" onclick="User.closeProfile()">
-                    <i class="fa fa-times-circle" aria-hidden="true"></i>
-                </div>
-            <div class="top">
-                <div class="background">
-                    <img src="${data.backgroundPicture}" alt="">
-                </div>
-                <div class="user">
-                    <div class="avatar avatar120">
-                        <img src="${data.profilePicture}" class="avatarPicture" alt="profilePic" />
+                var html = `
+                <div class="close" onclick="User.closeProfile()">
+                        <i class="fa fa-times-circle" aria-hidden="true"></i>
                     </div>
-                    <div class="text">
-                        <span class="displayName">${data.displayName}</span>
-                        <span class="email">${data.email}</span>
+                <div class="top">
+                    <div class="background">
+                        <img src="${checkBgPic()}" alt="">
                     </div>
+                    <div class="user">
+                        <div class="avatar avatar120">
+                            <img src="${data.profilePicture}" class="avatarPicture" alt="profilePic" />
+                        </div>
+                        <div class="text">
+                            <span class="displayName">${data.displayName}</span>
+                            <span class="status">${checkStatus()}</span>
+                        </div>
+                    </div>
+    
                 </div>
+                <div class="posts">
+                </div>
+                
+                `
 
-            </div>
-            <div class="posts">
-            </div>
-            
-            `
+                profileContent.innerHTML = html
 
-            profileContent.innerHTML = html
-
-            function postDisplay() {
-                if (posts !== undefined) {
-                    Object.values(posts).forEach((e) => {
-                        //message: ""
-                        //postImageUrl: ""
-                        //sender: ""
-                        //senderProfile: ""
-                        //senderUid: ""
-                        //timestamp: ""
+                function postDisplay() {
+                    if (posts !== undefined) {
+                        Object.values(posts).forEach((e) => {
+                            //message: ""
+                            //postImageUrl: ""
+                            //sender: ""
+                            //senderProfile: ""
+                            //senderUid: ""
+                            //timestamp: ""
 
 
-                        var postHtml;
-
-                        if (e.senderUid === firebase.auth().currentUser.uid) {
-                            postHtml = `
+                            var postHtml = `
                             <div id="${e.snapKey}" class="post">
                             <div class="thumbnail">
                                 <div class="avatar">
                                     <img src="${e.senderProfile}" alt="profilePic">
                                 </div>
                                 <div class="text">
-                                    <span class="nickname">${e.sender} <span>You</span></span>
+                                    <span class="nickname">${e.sender}</span>
                                     <span class="timestamp">${e.timestamp}</span>
-                                </div>
-                                <div class="dropdown">
-                                    <div onclick="deleteMessage('posts','${e.snapKey}')" class="content">
-                                        <div class="delete">
-                                            <i class="far fa-trash-alt"></i>
-                                            <span>Delete</span>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="border"></div>
@@ -270,38 +300,24 @@ var User = {
                             </div>
     
                             `
-                        } else { postHtml = `
-                        <div id="${e.snapKey}" class="post">
-                        <div class="thumbnail">
-                            <div class="avatar">
-                                <img src="${e.senderProfile}" alt="profilePic">
-                            </div>
-                            <div class="text">
-                                <span class="nickname">${e.sender}</span>
-                                <span class="timestamp">${e.timestamp}</span>
-                            </div>
-                        </div>
-                        <div class="border"></div>
-                        <div class="content">
-                          <span class="text">${e.message}</span>
-                          <img src="${e.postImageUrl}">
-                          <div class="border"></div>
-                        </div>
-                        </div>
-
-                        ` }
-
-                        var profilePosts = document.querySelector('.bodyContent>.profile>.content>.posts')
-                        return profilePosts.innerHTML += postHtml
-                    })
-                } else if (posts == undefined) {
-                    var profilePosts = document.querySelector('.bodyContent>.profile>.content>.posts')
-                    return profilePosts.innerHTML = "<span class='tints'>There is nothing more to show</span>"
+                            var profilePosts = document.querySelector('body>.profile>.content>.posts')
+                            if (e.senderUid == uid) {
+                                return profilePosts.insertAdjacentHTML('afterbegin', postHtml);
+                            } else {
+                                return;
+                            }
+                        })
+                    } else if (posts == undefined) {
+                        var profilePosts = document.querySelector('body>.profile>.content>.posts')
+                        return profilePosts.innerHTML = "<span class='tints'>There is nothing more to show</span>"
+                    }
                 }
-            }
-            postDisplay()
+                postDisplay()
 
-        });
+            });
+        })
+
+
     },
     openPopup: function(thingToChange) {
         var popupBody = document.querySelector('.changePopup')
@@ -326,6 +342,14 @@ var User = {
                         <button onclick="User.changeDName(document.querySelector('.changePopup .content input').value)">Change</button>
                     </div>`;
                 break;
+            case ("status"):
+                popupContent.innerHTML = `
+                        <div class="content">
+                            <span>Change Status</span>
+                            <input type="text">
+                            <button onclick="User.changeStatus(document.querySelector('.changePopup .content input').value)">Change</button>
+                        </div>`;
+                break;
             case ("avatar"):
 
                 popupContent.innerHTML = `
@@ -335,6 +359,16 @@ var User = {
           accept=".jpg, .jpeg, .png"></input>
                         <button onclick="User.changeAvatar()">Change</button>
                     </div>`;
+                break;
+            case ("background"):
+
+                popupContent.innerHTML = `
+                        <div class="content">
+                            <span>Change Background</span>
+                            <input type="file" id="profile_pic" name="profile_pic"
+              accept=".jpg, .jpeg, .png"></input>
+                            <button onclick="User.changeBg()">Change</button>
+                        </div>`;
                 break;
 
         }
@@ -426,13 +460,12 @@ firebase.auth().onAuthStateChanged((user) => {
             }
         }
 
-        firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/data").set({
-            "displayName": firebase.auth().currentUser.displayName,
-            "email": firebase.auth().currentUser.email,
-            "uid": firebase.auth().currentUser.uid,
-            "profilePicture": firebase.auth().currentUser.photoURL,
-            "backgroundPicture": defaultBG()
-        });
+        var uid = firebase.auth().currentUser.uid
+
+        firebase.database().ref("users/" + uid + "/data/displayName").set(firebase.auth().currentUser.displayName);
+        firebase.database().ref("users/" + uid + "/data/email").set(firebase.auth().currentUser.email);
+        firebase.database().ref("users/" + uid + "/data/uid").set(firebase.auth().currentUser.uid);
+        firebase.database().ref("users/" + uid + "/data/profilePicture").set(firebase.auth().currentUser.photoURL);
 
         if (firebase.auth().currentUser.photoURL !== null) {
             pPicture = firebase.auth().currentUser.photoURL

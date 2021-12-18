@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>gHOST v2</title>
 
     <link rel="stylesheet" href="../assets/css/common.css" />
     <link rel="stylesheet" href="../assets/css/loggedin/home.css" />
@@ -40,7 +40,7 @@
 
     <nav>
         <div class="ver">
-            <span>gHOST v2.0.6</span>
+            <span>gHOST v2.0.7</span>
             <span class="beta">BETA</span>
         </div>
         <div class="midIcons">
@@ -86,7 +86,17 @@
                     <hr />
                     <section class="settings" id="dropdownSettings">
                         <div class="thumbnail">
-                            <span><i class="fas fa-sliders-h"></i> Settings</span>
+                            <span><i class="fas fa-sliders-h"></i> Account</span>
+                        </div>
+                        <div class="elements">
+                            <span>
+                                <i class="fas fa-unlock-alt"></i>
+                                <a onclick="User.openPopup('password')" href="#">Change Password</a>
+                            </span>
+
+                        </div>
+                        <div class="thumbnail">
+                            <span><i class="fa fa-user"></i> User</span>
                         </div>
                         <div class="elements">
                             <span>
@@ -94,16 +104,26 @@
                                 <a onclick="User.openPopup('dname')" href="#">Change Nickname</a>
                             </span>
                             <span>
-                                <i class="fas fa-unlock-alt"></i>
-                                <a onclick="User.openPopup('password')" href="#">Change Password</a>
-                            </span>
-                            <span>
                                 <i class="far fa-user-circle"></i>
                                 <a onclick="User.openPopup('avatar')" href="#">Change Avatar</a>
                             </span>
+                            <span>
+                                <i class="far fa-image"></i>
+                                <a onclick="User.openPopup('background')" href="#">Change Background</a>
+                            </span>
+                            <span>
+                                <i class="far fa-address-card"></i>
+                                <a onclick="User.openPopup('status')" href="#">Change Status</a>
+                            </span>
+                            <span>
+                                <i class="far fa-trash-alt"></i>
+                                <a onclick="User.deleteStatus()" href="#">Delete Status</a>
+                            </span>
+
                         </div>
                         <hr />
                     </section>
+
                     <section class="operations">
                         <button onclick="User.logout()">
                             <i class="fas fa-sign-out-alt"></i> 
@@ -150,29 +170,31 @@
             </div>
         </div>
 
-        <div class="profile">
-            <div class="content">
-                <div class="close" onclick="User.closeProfile()">
-                    <i class="fa fa-times-circle" aria-hidden="true"></i>
-                </div>
-                <div class="top">
-                    <div class="background">
-                        <img src="https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/users%2F4p3dAIZKl9WSXpXyGlXOhyn5s692%2Fbackground.jpg?alt=media&token=e49d32f0-704c-49d8-8c51-4f92faba2611" alt="">
-                    </div>
-                    <div class="user">
-                        <div class="avatar avatar120">
-                            <img src="https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPPic.png?alt=media&token=fa2aea88-e0ad-44a4-9920-0e1ac35909ce" class="avatarPicture" alt="profilePic" />
-                        </div>
-                        <div class="text">
-                            <span class="displayName">noname</span>
-                            <span class="email">example@example.com</span>
-                        </div>
-                    </div>
 
-                </div>
-                <div class="posts">
+    </div>
 
+    <div class="profile">
+        <div class="content">
+            <div class="close" onclick="User.closeProfile()">
+                <i class="fa fa-times-circle" aria-hidden="true"></i>
+            </div>
+            <div class="top">
+                <div class="background">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPBg.jpg?alt=media&token=effd2247-db3d-45fc-8a7b-9c55164a6f44" alt="">
                 </div>
+                <div class="user">
+                    <div class="avatar avatar120">
+                        <img src="https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPPic.png?alt=media&token=fa2aea88-e0ad-44a4-9920-0e1ac35909ce" class="avatarPicture" alt="profilePic" />
+                    </div>
+                    <div class="text">
+                        <span class="displayName">noname</span>
+                        <span class="email">example@example.com</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="posts">
+
             </div>
         </div>
     </div>
