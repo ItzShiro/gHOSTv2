@@ -111,7 +111,7 @@ firebase.database().ref("messages").on("child_added", function(snapshot) {
                 </div>`
         if (Content.groupChatOpen == false) {
             Content.notification(snapshot.val().sender, snapshot.val().message)
-            Content.sounds("notification")
+                //Content.sounds("notification")
         }
     }
 
