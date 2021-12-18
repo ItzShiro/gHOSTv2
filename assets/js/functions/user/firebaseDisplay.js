@@ -8,7 +8,7 @@ firebase.database().ref("posts").on("child_added", function(snapshot) {
         if (snapshot.val().postImageUrl == undefined) {
             return;
         } else {
-            return `<img src="${snapshot.val().postImageUrl}">`
+            return `<img onclick="location.href='${snapshot.val().postImageUrl}'" src="${snapshot.val().postImageUrl}">`
         }
     }
 
