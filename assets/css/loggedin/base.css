@@ -288,9 +288,15 @@ hr {
 }
 
 .changePopup .close {
-    font-size: 26px;
+    font-size: 28px;
     color: var(--text);
     cursor: pointer;
+    background-color: var(--light-dark);
+    height: 26px;
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     right: 15PX;
     top: 15px;

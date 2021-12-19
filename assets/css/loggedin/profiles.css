@@ -18,11 +18,18 @@ body>.profile i {
 }
 
 body>.profile>.content>.close {
-    position: absolute;
-    right: 5px;
-    font-size: 30px;
+    font-size: 28px;
+    color: var(--text);
     cursor: pointer;
-    top: 5px;
+    background-color: var(--light-dark);
+    height: 26px;
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 15PX;
+    top: 15px;
 }
 
 body>.profile>.content {
@@ -119,4 +126,16 @@ body .profile .content .top .user .text span:nth-child(2) {
 .tints {
     color: var(--text);
     font-size: 20px;
+}
+
+.displayName {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.displayName>img {
+    margin-left: 5px;
+    width: 26px;
+    border-radius: 50%;
 }

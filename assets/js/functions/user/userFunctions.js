@@ -273,6 +273,20 @@ var User = {
 
                 profileContent.innerHTML = html
 
+                function badgesDisplay() {
+                    firebase.database().ref(`users/${uid}/badges`).on('value', (snap) => {
+                        if (snap.val() !== null) {
+                            if (snap.val().team == true) {
+                                document.querySelector(".user>.text>.displayName").innerHTML += `<img class="badge" src="../assets/img/badges/gHostTeam.png">`
+                            }
+                            if (snap.val().betaTester == true) {
+                                document.querySelector(".user>.text>.displayName").innerHTML += `<img class="badge" src="../assets/img/badges/betaBadge.png">`
+                            }
+                        }
+                    })
+                }
+                badgesDisplay()
+
                 function postDisplay() {
                     if (posts !== undefined) {
                         Object.values(posts).forEach((e) => {
@@ -445,7 +459,7 @@ firebase.auth().onAuthStateChanged((user) => {
     if (!user) {
         location.href = "../auth";
     } else {
-
+        firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/badges/betaTester").set(true)
         firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/").on('value', (snap) => {
             var appearance = snap.val().appearance
 
@@ -466,11 +480,12 @@ firebase.auth().onAuthStateChanged((user) => {
                     --color3: #e5e6eb;
                     --color4: #f8f8fa;
                     --color5: tomato;
-                   --bar_boxShadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
+                    --bar_boxShadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
                     --fog: rgba(0, 0, 0, 0.6);
+                    --light-dark: white;
                     --loader-icons: white;
-                   --icons: #1e1d1e;
-                    --text: #000;
+                    --icons: #1e1d1e;
+                    --text: #000;   
                 }
                 
                 `
