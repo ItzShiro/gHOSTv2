@@ -125,7 +125,6 @@ function deleteMessage(type, self) {
     firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/posts/").child(self).remove();
 }
 
-
 Element.prototype.remove = function() {
     this.parentElement.removeChild(this);
 }

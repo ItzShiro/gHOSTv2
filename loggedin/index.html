@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="../assets/css/loggedin/chat.css">
     <link rel="stylesheet" href="../assets/css/loggedin/profiles.css">
     <link rel="stylesheet" href="../assets/css/palette.css">
+    <link rel="stylesheet" href="../assets/css/loggedin/friends.css">
 
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
@@ -150,6 +151,26 @@
             </div>
     </nav>
     <div class="bodyContent">
+
+        <div class="leftArea">
+            <div class="friends">
+                <div class="pending window">
+                    <div class="thumbnail">
+                        <span>
+                            Pending
+                        </span>
+                    </div>
+                </div>
+                <div class="invites window">
+                    <div class="thumbnail">
+                        <span>
+                            Invites
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="posts">
             <div class="sendPost">
                 <input placeholder="Whats on your mind?" type="text" class="postInput">
@@ -221,6 +242,7 @@
     </div>
 
     <script src="../firebase/conn.js"></script>
+    <script src="../assets/js/functions/user/friends.js"></script>
     <script src="../assets/js/functions/user/firebaseDisplay.js"></script>
     <script src="../assets/js/functions/user/userFunctions.js"></script>
 </body>

@@ -473,3 +473,22 @@ div.hide {
     margin-left: 5px;
     font-size: 13px;
 }
+
+.leftArea {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: calc(100% / 2 - (512px / 2));
+    padding: 15px;
+}
+
+@media only screen and (max-width: 1224px) {
+    .posts {
+        position: absolute;
+        right: 15px;
+    }
+    .leftArea {
+        width: calc(100% - 15px - 512px);
+    }
+}

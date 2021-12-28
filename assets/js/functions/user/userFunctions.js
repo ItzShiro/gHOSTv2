@@ -225,29 +225,44 @@ var User = {
 
         profileBody.classList.add('active')
         contentBody.style.overflowY = "hidden"
-        firebase.database().ref(`users/${uid}/data`).on('value', (snap) => {
-            var data = snap.val()
-            firebase.database().ref('posts/').on('value', (snap) => {
+        firebase.database().ref(`users/${firebase.auth().currentUser.uid}/friends/${uid}/status`).once('value', (snapshot) => {
+            firebase.database().ref(`users/${uid}/data`).on('value', (snap) => {
+                var data = snap.val()
+                firebase.database().ref('posts/').on('value', (snap) => {
 
-                var posts = snap.val()
+                    var posts = snap.val()
 
-                function checkStatus() {
-                    if (data.status !== undefined) {
-                        return data.status
-                    } else {
-                        return "No Status"
+                    function checkStatus() {
+                        if (data.status !== undefined || data.status == "") {
+                            return data.status
+                        } else {
+                            return "No Status"
+                        }
                     }
-                }
 
-                function checkBgPic() {
-                    if (data.backgroundPicture !== undefined) {
-                        return data.backgroundPicture
-                    } else {
-                        return "https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPBg.jpg?alt=media&token=effd2247-db3d-45fc-8a7b-9c55164a6f44";
+                    function checkBgPic() {
+                        if (data.backgroundPicture !== undefined) {
+                            return data.backgroundPicture
+                        } else {
+                            return "https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPBg.jpg?alt=media&token=effd2247-db3d-45fc-8a7b-9c55164a6f44";
+                        }
                     }
-                }
 
-                var html = `
+                    function checkIfYou() {
+                        if (uid == firebase.auth().currentUser.uid) {
+                            return "";
+                        } else if (snapshot.val() == true) {
+                            return '<i class="fas fa-user-check"></i> '
+                        } else if (snapshot.val() == undefined || snapshot.val() == null) {
+                            return `<button onclick="${friends.add(uid)}" class="friendaddIcon"><i class="fas fa-user-plus"></i> Add</button> `
+                        } else if (snapshot.val() == "invite") {
+                            return `<button onclick="${friends.accept(uid)}" class="friendaddIcon"><i class="fas fa-user-plus"></i> Accept</button> `
+                        } else if (snapshot.val() == false) {
+                            return "Pending "
+                        }
+                    }
+
+                    var html = `
                 <div class="close" onclick="User.closeProfile()">
                         <i class="fa fa-times-circle" aria-hidden="true"></i>
                     </div>
@@ -260,7 +275,7 @@ var User = {
                             <img src="${data.profilePicture}" class="avatarPicture" alt="profilePic" />
                         </div>
                         <div class="text">
-                            <span class="displayName">${data.displayName}</span>
+                            <span class="displayName">${checkIfYou()}${data.displayName}</span>
                             <span class="status">${checkStatus()}</span>
                         </div>
                     </div>
@@ -271,34 +286,34 @@ var User = {
                 
                 `
 
-                profileContent.innerHTML = html
+                    profileContent.innerHTML = html
 
-                function badgesDisplay() {
-                    firebase.database().ref(`users/${uid}/badges`).on('value', (snap) => {
-                        if (snap.val() !== null) {
-                            if (snap.val().team == true) {
-                                document.querySelector(".user>.text>.displayName").innerHTML += `<img class="badge" src="../assets/img/badges/gHostTeam.png">`
+                    function badgesDisplay() {
+                        firebase.database().ref(`users/${uid}/badges`).on('value', (snap) => {
+                            if (snap.val() !== null) {
+                                if (snap.val().team == true) {
+                                    document.querySelector(".user>.text>.displayName").innerHTML += `<img class="badge" src="../assets/img/badges/gHostTeam.png">`
+                                }
+                                if (snap.val().betaTester == true) {
+                                    document.querySelector(".user>.text>.displayName").innerHTML += `<img class="badge" src="../assets/img/badges/betaBadge.png">`
+                                }
                             }
-                            if (snap.val().betaTester == true) {
-                                document.querySelector(".user>.text>.displayName").innerHTML += `<img class="badge" src="../assets/img/badges/betaBadge.png">`
-                            }
-                        }
-                    })
-                }
-                badgesDisplay()
+                        })
+                    }
+                    badgesDisplay()
 
-                function postDisplay() {
-                    if (posts !== undefined) {
-                        Object.values(posts).forEach((e) => {
-                            //message: ""
-                            //postImageUrl: ""
-                            //sender: ""
-                            //senderProfile: ""
-                            //senderUid: ""
-                            //timestamp: ""
+                    function postDisplay() {
+                        if (posts !== undefined) {
+                            Object.values(posts).forEach((e) => {
+                                //message: ""
+                                //postImageUrl: ""
+                                //sender: ""
+                                //senderProfile: ""
+                                //senderUid: ""
+                                //timestamp: ""
 
 
-                            var postHtml = `
+                                var postHtml = `
                             <div id="${e.snapKey}" class="post">
                             <div class="thumbnail">
                                 <div class="avatar">
@@ -318,23 +333,23 @@ var User = {
                             </div>
     
                             `
+                                var profilePosts = document.querySelector('body>.profile>.content>.posts')
+                                if (e.senderUid == uid) {
+                                    return profilePosts.insertAdjacentHTML('afterbegin', postHtml);
+                                } else {
+                                    return;
+                                }
+                            })
+                        } else if (posts == undefined) {
                             var profilePosts = document.querySelector('body>.profile>.content>.posts')
-                            if (e.senderUid == uid) {
-                                return profilePosts.insertAdjacentHTML('afterbegin', postHtml);
-                            } else {
-                                return;
-                            }
-                        })
-                    } else if (posts == undefined) {
-                        var profilePosts = document.querySelector('body>.profile>.content>.posts')
-                        return profilePosts.innerHTML = "<span class='tints'>There is nothing more to show</span>"
+                            return profilePosts.innerHTML = "<span class='tints'>There is nothing more to show</span>"
+                        }
                     }
-                }
-                postDisplay()
+                    postDisplay()
 
-            });
+                });
+            })
         })
-
 
     },
     openPopup: function(thingToChange) {
@@ -459,6 +474,14 @@ firebase.auth().onAuthStateChanged((user) => {
     if (!user) {
         location.href = "../auth";
     } else {
+        friends.display()
+        firebase.database().ref(`users/${firebase.auth().currentUser.uid}/friends`).on('child_changed', (snap) => {
+            document.getElementById(snap.val().uid).remove()
+        })
+        firebase.database().ref(`users/${firebase.auth().currentUser.uid}/friends`).on('child_removed', (snap) => {
+            document.getElementById(snap.val().uid).remove()
+        })
+
         firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/badges/betaTester").set(true)
         firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/").on('value', (snap) => {
             var appearance = snap.val().appearance
@@ -469,7 +492,6 @@ firebase.auth().onAuthStateChanged((user) => {
         })
 
         firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/appearance/lightTheme").on('value', (snap) => {
-            console.log(snap.val())
             if (snap.val() == true) {
                 Content.lightTheme = true
                 document.querySelector('.palette').innerHTML = `
