@@ -7,6 +7,7 @@ var message = {
                 content: messageText
             }).then(() => {
                 firebase.database().ref(`users/${firebase.auth().currentUser.uid}/friends/${toUid}/lastMessage`).set(messageText)
+                firebase.database().ref(`users/${toUid}/friends/${firebase.auth().currentUser.uid}/lastMessage`).set(messageText)
             })
     },
     listener: null,
