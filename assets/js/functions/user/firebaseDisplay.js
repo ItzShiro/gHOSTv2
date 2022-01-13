@@ -1,6 +1,8 @@
 //Its just a file to make a chat/posts display
 firebase.database().ref("posts").on("child_added", function(snapshot) {
 
+    if (webData.site !== "index") return;
+
     var user = firebase.auth().currentUser
     var html = "";
 

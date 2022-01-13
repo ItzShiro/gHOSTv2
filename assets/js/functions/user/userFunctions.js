@@ -428,6 +428,7 @@ var addPostPhoto = function() {
     document.querySelector('input[type="file"]#post_pic').click()
 }
 var Content = {
+    loadProgress: 0,
     dropdownToggle: function() {
         document.querySelector('.dropdownOpen').classList.toggle('active')
         document.querySelector('.dropdown .content').classList.toggle('active')
@@ -443,6 +444,7 @@ var Content = {
     },
     lightTheme: null,
     notification: function(thumbnail, content) {
+        if (this.loadProgress <= 2) return;
         var content = `
       <div class="notification">
         <div class="thumbnail">${thumbnail}</div>
@@ -474,25 +476,12 @@ firebase.auth().onAuthStateChanged((user) => {
     if (!user) {
         location.href = "../auth";
     } else {
-        friends.display()
-        firebase.database().ref(`users/${firebase.auth().currentUser.uid}/friends`).on('child_changed', (snap) => {
-            document.getElementById(snap.val().uid).remove()
-        })
-        firebase.database().ref(`users/${firebase.auth().currentUser.uid}/friends`).on('child_removed', (snap) => {
-            document.getElementById(snap.val().uid).remove()
-        })
 
-        firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/badges/betaTester").set(true)
-        firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/").on('value', (snap) => {
-            var appearance = snap.val().appearance
-
-            if (appearance == undefined) {
-                firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/appearance/lightTheme").set(false)
-            }
-        })
+        Content.loadProgress += 1
 
         firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/appearance/lightTheme").on('value', (snap) => {
             if (snap.val() == true) {
+                Content.loadProgress += 1
                 Content.lightTheme = true
                 document.querySelector('.palette').innerHTML = `
                 
@@ -517,7 +506,9 @@ firebase.auth().onAuthStateChanged((user) => {
             }
         })
 
-
+        firebase.database().ref(`users/${firebase.auth().currentUser.uid}`).once('value', () => {
+            Content.loadProgress += 1
+        })
 
 
         var bgPicture;
@@ -584,6 +575,23 @@ firebase.auth().onAuthStateChanged((user) => {
 
             Content.groupChatOpen = false
         }, 1000)
+        if (webData.site !== "index") return;
+        friends.display()
+        firebase.database().ref(`users/${firebase.auth().currentUser.uid}/friends`).on('child_changed', (snap) => {
+            document.getElementById(snap.val().uid).remove()
+        })
+        firebase.database().ref(`users/${firebase.auth().currentUser.uid}/friends`).on('child_removed', (snap) => {
+            document.getElementById(snap.val().uid).remove()
+        })
+
+        firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/badges/betaTester").set(true)
+        firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/").on('value', (snap) => {
+            var appearance = snap.val().appearance
+
+            if (appearance == undefined) {
+                firebase.database().ref("users/" + firebase.auth().currentUser.uid + "/appearance/lightTheme").set(false)
+            }
+        })
     }
 });
 

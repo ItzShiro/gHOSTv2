@@ -9,11 +9,11 @@
 
     <link rel="stylesheet" href="../assets/css/common.css" />
     <link rel="stylesheet" href="../assets/css/loggedin/base.css">
-    <link rel="stylesheet" href="../assets/css/loggedin/posts.css">
     <link rel="stylesheet" href="../assets/css/loggedin/chat.css">
     <link rel="stylesheet" href="../assets/css/loggedin/profiles.css">
+    <link rel="stylesheet" href="../assets/css/loggedin/posts.css">
     <link rel="stylesheet" href="../assets/css/palette.css">
-    <link rel="stylesheet" href="../assets/css/loggedin/friends.css">
+    <link rel="stylesheet" href="../assets/css/loggedin/messenger.css">
 
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
@@ -59,7 +59,7 @@
                 <div class="label">Group</div>
             </div>
             <div onclick="location.href='./messenger.html'" class="icon">
-                <i class="fas fa-user-friends"></i>
+                <i class="fas fas fa-user-friends"></i>
                 <div class="label">Messenger</div>
             </div>
             <div onclick="User.openProfile(firebase.auth().currentUser.uid)" class="icon">
@@ -154,41 +154,26 @@
             </div>
     </nav>
     <div class="bodyContent">
-
-        <div class="leftArea">
+        <div class="leftContent">
             <div class="friends">
-                <div class="pending window">
-                    <div class="thumbnail">
-                        <span>
-                            Pending
-                        </span>
-                    </div>
-                </div>
-                <div class="invites window">
-                    <div class="thumbnail">
-                        <span>
-                            Invites
-                        </span>
-                    </div>
-                </div>
             </div>
         </div>
+        <div class="content ">
+            <div class="topBar">
+                <div class="avatar50">
+                    <img src="../assets/img/defaultAvatar.png" alt="ProfilePic">
+                </div>
+                <div class="text">
+                    <div class="nickname">Lorem, ipsum.</div>
+                    <div class="status">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Animi, consectetur!</div>
 
-        <div class="posts">
-            <div class="sendPost">
-                <input placeholder="Whats on your mind?" type="text" class="postInput">
-                <input onchange="writeFilename()" style="display: none;" type="file" id="post_pic" name="post_pic" accept=".jpg, .jpeg, .png"></input>
-                <button class="photoAddBtn" onclick="addPostPhoto()" style="cursor: pointer;">Add Photo</button><br>
-                <span><span style="margin-left: 5px; " class="fileNamedisplay">No File Selected</span>
-                <script>
-                    function writeFilename() {
-                        document.querySelector('.fileNamedisplay').innerHTML = document.querySelector('input[type="file"]#post_pic').value.split(/(\\|\/)/g).pop()
-                    }
-                </script>
-                </span>
-                <button class="sendBtn" onclick="User.addPost()" style="cursor: pointer;">Send</button>
+                </div>
             </div>
-            <div class="content">
+
+            <div class="messages">
+            </div>
+            <div class="input">
+                <input type="text" class="private_textInput" placeholder="Message...">
             </div>
         </div>
     </div>
@@ -234,7 +219,6 @@
             </div>
         </div>
     </div>
-
     <div class="changePopup">
         <div class="close" onclick="User.closePopup()"><i class="fa fa-times-circle" aria-hidden="true"></i></div>
         <div class="content">
@@ -245,7 +229,10 @@
     </div>
     <script>
         var webData = {
-            site: "index"
+            site: "messenger",
+            messenger: {
+                userOpen: null
+            }
         }
     </script>
     <script>
@@ -254,7 +241,7 @@
         console.log('%c Console is meant bo be used by application developers, if anyone said that you can stole someone`s account or let you do more things its a lie and can get your account stolen ', 'font-size: 36px; font-weight:900; -webkit-text-stroke:1px black; color: lightblue');
     </script>
     <script src="../firebase/conn.js"></script>
-    <script src="../assets/js/functions/user/friends.js"></script>
+    <script src="../assets/js/functions/user/messenger.js"></script>
     <script src="../assets/js/functions/user/firebaseDisplay.js"></script>
     <script src="../assets/js/functions/user/userFunctions.js"></script>
 </body>

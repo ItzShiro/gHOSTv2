@@ -33,12 +33,9 @@ var friends = {
     display: function() {
         firebase.database().ref(`users/${firebase.auth().currentUser.uid}/friends`).on('child_added', (snap) => {
             firebase.database().ref(`users/${snap.val().uid}/data`).once('value', (snapshot) => {
-                console.log(snap.val())
-                console.log(snapshot.val())
                 if (snap.val() !== null) {
                     switch (snap.val().status) {
                         case true:
-                            console.log("Active Friend")
                             break;
                         case false:
                             var html = `

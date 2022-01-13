@@ -1,0 +1,210 @@
+/*
+<div class="leftContent">
+    <div class="friends">
+        <div class="item">
+            <div class="avatar50">
+                <img src="../assets/img/defaultAvatar.png" alt="Avatar">
+            </div>
+            <div class="info">
+                <div class="nickname">
+                    CartoonGuy
+                </div>
+                <div class="lastMessage">
+                    I fucked your mum
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*/
+
+.bodyContent {
+    overflow: hidden;
+}
+
+.leftContent {
+    width: 360px;
+    height: 100%;
+    margin-top: 0;
+    position: relative;
+}
+
+.friends {
+    width: 385px;
+    height: 100%;
+    position: absolute;
+    overflow-y: scroll;
+}
+
+.friends .item {
+    margin-top: 13px;
+    border-radius: 7px;
+    color: var(--text);
+    width: 94%;
+    margin-left: 3%;
+    background-color: var(--color4);
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+    transition: 0.2s transform;
+}
+
+.friends .item .line {
+    width: 2px;
+    height: 60%;
+    background-color: var(--text);
+    position: absolute;
+    right: 15px;
+    opacity: 0;
+    transition: 0.2s;
+}
+
+.friends .item .avatar50 {
+    border-radius: 50%;
+    overflow-y: hidden;
+}
+
+.friends .item:hover {
+    transform: translateX(5px);
+}
+
+.friends .item:hover .line {
+    opacity: 1;
+}
+
+.friends .item .nickname {
+    margin-left: 7px;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.friends .item .lastMessage {
+    margin-left: 7px;
+    font-size: 14px;
+    margin-top: -3px;
+    opacity: 0.6;
+    max-width: 260px;
+    max-height: 23px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.bodyContent .content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: calc(100% - 385px);
+    height: 100%;
+    overflow: hidden;
+    display: none;
+}
+
+.bodyContent .content.active {
+    display: block;
+}
+
+.bodyContent .content .topBar {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    background-color: var(--color3);
+    color: var(--text);
+    align-items: center;
+}
+
+.bodyContent .content .topBar .avatar50 {
+    overflow: hidden;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+.bodyContent .content .topBar .text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.bodyContent .content .topBar .text .nickname {
+    font-size: 20px;
+}
+
+.bodyContent .content .topBar .text .status {
+    font-size: 14px;
+    margin-top: -3px;
+    opacity: 0.6;
+}
+
+.bodyContent .content .messages {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: calc(100% - 65px - 55px);
+}
+
+.bodyContent .content .messages .messageContainer {
+    width: 100%;
+    height: fit-content;
+    margin-top: 10px;
+}
+
+.bodyContent .content .messages .message {
+    border-radius: 7px;
+    max-width: 50%;
+    width: fit-content;
+    display: flex;
+    padding: 10px;
+    color: var(--text);
+}
+
+.bodyContent .content .messages .messageContainer .message .text {
+    background-color: var(--color3);
+    margin-left: 10px;
+    padding: 10px;
+    border-radius: 7px;
+}
+
+.bodyContent .content .messages .messageContainer.byMe .message .text {
+    margin-left: 0px;
+    margin-right: 10px;
+}
+
+.bodyContent .content .messages .messageContainer.byMe .message {
+    float: right;
+}
+
+.avatar40 {
+    overflow: hidden;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    border-radius: 7px;
+    background-color: var(--text);
+}
+
+.bodyContent .content .input {
+    width: 100%;
+    height: 45px;
+}
+
+.bodyContent .content .input input {
+    width: 97%;
+    margin-left: 1.5%;
+    height: 45px;
+    margin-top: 5px;
+    border-radius: 7px;
+    border: none;
+    background-color: var(--color4);
+    color: var(--text);
+    padding: 10px;
+    font-size: 17px;
+}
