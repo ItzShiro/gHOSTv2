@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gHOST v2</title>
+
+    <link rel="stylesheet" href="./assets/css/common.css" />
+    <link rel="stylesheet" href="./assets/css/loggedin/base.css">
+    <link rel="stylesheet" href="./assets/css/starting.css">
+    <link rel="stylesheet" href="./assets/css/loggedin/base.css">
+    <link rel="stylesheet" href="./assets/css/palette.css">
+
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+</head>
+
+<body>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+
+    <nav>
+        <div class="ver">
+            <span>gHOST v2.0.9</span>
+            <span class="beta">BETA</span>
+        </div>
+        <div class="rightIcons">
+            <a href="./auth/index.html">Login</a>
+            <a href="./auth/register.html">Register</a>
+        </div>
+    </nav>
+    <div style="overflow: hidden;" class="bodyContent">
+        <div class="box">
+            <div class="thumbnail">
+                Hi There!
+            </div>
+            <div class="buttons">
+                <button onclick='location.href="./auth/index.html"' class="login"><span>Login</span></button>
+                <button onclick='location.href="./auth/register.html"' class="register"><span>Register</span></button>
+                <br>
+                <a href="" class="forgot"><span>Forgot your password?</span></a>
+                <div class="slide"></div>
+            </div>
+        </div>
+    </div>
+    <div class="changePopup">
+        <div class="close" onclick="User.closePopup()"><i class="fa fa-times-circle" aria-hidden="true"></i></div>
+        <div class="content">
+            <span>Reset Password</span>
+            <span>You will get message on your email with link that will let you reset your password</span>
+            <input class="resetInput" type="text">
+            <button onclick="resetPswd(`document.querySelector('.resetInput').value`)">Reset</button>
+        </div>
+    </div>
+    <script src="./firebase/conn.js"></script>
+    <script src="./assets/js/functions/starting.js"></script>
+    <script src="./firebase/conn.js"></script>
+    <script>
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                location.href = './loggedin'
+            }
+        });
+    </script>
+</body>
+
+</html>
