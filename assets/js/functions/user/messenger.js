@@ -15,9 +15,18 @@ var message = {
         const idPair = [firebase.auth().currentUser.uid, uid].sort().slice(",")
         webData.messenger.userOpen = uid
 
-        firebase.database().ref(`users/${uid}/data/`).once('value', (snap) => {
-            console.log(`Loaded Messages with "${snap.val().displayName}" And started to listen for new messages by this user`)
+        firebase.database().ref(`users/${firebase.auth().currentUser.uid}/data/messenger_lastUser`)
 
+        if (webData.messenger.userOpen !== uid) {
+            window.location.reload(true);
+        }
+
+        firebase.database().ref(`users/${uid}/data/`).once('value', (snap) => {
+
+            function checkStatus() {
+                if (snap.val().status == null || snap.val().status == undefined) return "No Status";
+                return snap.val().status
+            }
 
             var content = `
                 <div class="avatar50">
@@ -25,7 +34,7 @@ var message = {
                 </div>
                 <div class="text">
                     <div class="nickname">${snap.val().displayName}</div>
-                    <div class="status">${snap.val().status}</div>
+                    <div class="status">${checkStatus()}</div>
                 </div>
             `
             document.querySelector('.bodyContent .content .topBar').innerHTML = content
@@ -36,22 +45,27 @@ var message = {
 
         this.listener = firebase.database().ref(`dms/${idPair[0]}/${idPair[1]}/`).on('child_added', (snap) => {
             if (webData.messenger.userOpen !== uid || webData.messenger.userOpen == null) return;
+
+
             //console.log(snap.val().content)
             firebase.database().ref(`users/${uid}/data`).on('value', (snapshott) => {
                 firebase.database().ref(`users/${firebase.auth().currentUser.uid}/data`).on('value', (snapshot) => {
+                    if (document.querySelector("." + snap.key)) return;
                     if (snap.val().by == firebase.auth().currentUser.uid) {
-                        return document.querySelector('.bodyContent .content .messages').innerHTML += `
-                        <div class="messageContainer byMe">
+
+                        document.querySelector('.bodyContent .content .messages').innerHTML += `
+                        <div class="${snap.key} messageContainer byMe">
                             <div class="message ">
                                 <div class="text">${snap.val().content}</div>
-                                <div class="avatar40">
-                                    <img src="${snapshot.val().profilePicture}" alt="">
-                                </div>
                             </div>
                         </div>`
+
+                        var element = document.querySelector('.bodyContent .messages');
+                        element.scrollTop = element.scrollHeight - element.clientHeight;
                     } else if (snap.val().by !== firebase.auth().currentUser.uid) {
-                        return document.querySelector('.bodyContent .content .messages').innerHTML += `
-                        <div class="messageContainer">
+
+                        document.querySelector('.bodyContent .content .messages').innerHTML += `
+                        <div class="${snap.key} messageContainer">
                             <div class="message ">
                                 <div class="avatar40">
                                     <img src="${snapshott.val().profilePicture}" alt="">
@@ -59,7 +73,11 @@ var message = {
                                 <div class="text">${snap.val().content}</div>
                             </div>
                         </div>`
+
+                        var element = document.querySelector('.bodyContent .messages');
+                        element.scrollTop = element.scrollHeight - element.clientHeight;
                     }
+
                 })
             })
         })
@@ -68,6 +86,10 @@ var message = {
 }
 firebase.auth().onAuthStateChanged((user) => {
     if (!user) return;
+    firebase.database().ref(`users/${firebase.auth().currentUser.uid}/data/messenger_lastUser`).once('value', (snap) => {
+        if (snap.val() == undefined || snap.val() == null) return;
+        message.openMessages(snap.val())
+    })
     firebase.database().ref(`users/${firebase.auth().currentUser.uid}/friends`).on('child_added', (snap) => {
         if (snap.val().status !== true) return;
         firebase.database().ref(`users/${snap.val().uid}/`).once('value', snapshot => {
