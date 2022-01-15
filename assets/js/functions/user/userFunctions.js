@@ -191,7 +191,7 @@ var User = {
             if (document.querySelector('input[type="text"].group_messageInput').value == "" || document.querySelector('input[type="text"].group_messageInput').value == " ") {
                 return "";
             } else {
-                var gendersArray = new Array("#gay", "#lesbian", "#trans", "#genderqueer", "#bi", "#pansexual", "#queer", "#genderfluid", "#homosexual", "#bisexual", "#omni", "#transsexual", "#omnisexual", "#asexual", "#intersexual", "#topsexual", "#demisexual", "#demi")
+                var gendersArray = new Array("#lgbt", "#lgbtq", "#lgbtqa", "#lgbtqai", "#lgbtqaip", "#lgbtqaip+", "#lgbtqai+", "#lgbtqa+", "#lgbtq+", "#lgbt+", "#dream", "#dreamsexual", "#dreamsmp", "#kpop", "#dsmp", "#k-pop", "#bts", "#map", "#blm", "#zoo", "#iphone", "#ithings", "#imac", "#iloveapple", "#osx", "ipad", "#ipod", "#apple", "#gay", "#lesbian", "#trans", "#genderqueer", "#bi", "#pansexual", "#queer", "#genderfluid", "#homosexual", "#bisexual", "#omni", "#transsexual", "#omnisexual", "#asexual", "#intersexual", "#topsexual", "#demisexual", "#demi", "#tiktok", "#tt", "#meta", "#metaverse", "#nft", "#crypto", "#blockchain", "#killallmen", "#onlyfans")
                 if (gendersArray.includes(document.querySelector('input[type="text"].group_messageInput').value)) {
                     return User.logout()
                 } else {
@@ -254,9 +254,9 @@ var User = {
                         } else if (snapshot.val() == true) {
                             return '<i class="fas fa-user-check"></i> '
                         } else if (snapshot.val() == undefined || snapshot.val() == null) {
-                            return `<button onclick="${friends.add(uid)}" class="friendaddIcon"><i class="fas fa-user-plus"></i> Add</button> `
+                            return `<button onclick="friends.add(${uid})" class="friendaddIcon"><i class="fas fa-user-plus"></i> Add</button> `
                         } else if (snapshot.val() == "invite") {
-                            return `<button onclick="${friends.accept(uid)}" class="friendaddIcon"><i class="fas fa-user-plus"></i> Accept</button> `
+                            return `<button onclick="friends.accept(${uid})" class="friendaddIcon"><i class="fas fa-user-plus"></i> Accept</button> `
                         } else if (snapshot.val() == false) {
                             return "Pending "
                         }
