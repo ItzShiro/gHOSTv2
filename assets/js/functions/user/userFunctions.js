@@ -254,9 +254,9 @@ var User = {
                         } else if (snapshot.val() == true) {
                             return '<i class="fas fa-user-check"></i> '
                         } else if (snapshot.val() == undefined || snapshot.val() == null) {
-                            return `<button onclick="friends.add(${uid})" class="friendaddIcon"><i class="fas fa-user-plus"></i> Add</button> `
+                            return `<button onclick="friends.add('${uid}')" class="friendaddIcon"><i class="fas fa-user-plus"></i> Add</button> `
                         } else if (snapshot.val() == "invite") {
-                            return `<button onclick="friends.accept(${uid})" class="friendaddIcon"><i class="fas fa-user-plus"></i> Accept</button> `
+                            return `<button onclick="friends.accept('${uid}')" class="friendaddIcon"><i class="fas fa-user-plus"></i> Accept</button> `
                         } else if (snapshot.val() == false) {
                             return "Pending "
                         }
