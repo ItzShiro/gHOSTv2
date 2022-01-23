@@ -86,7 +86,7 @@ var ghost = {
             } else {
                 var gendersArray = new Array("#lgbt", "#lgbtq", "#lgbtqa", "#lgbtqai", "#lgbtqaip", "#lgbtqaip+", "#lgbtqai+", "#lgbtqa+", "#lgbtq+", "#lgbt+", "#dream", "#dreamsexual", "#dreamsmp", "#kpop", "#dsmp", "#k-pop", "#bts", "#map", "#blm", "#zoo", "#iphone", "#ithings", "#imac", "#iloveapple", "#osx", "ipad", "#ipod", "#apple", "#gay", "#lesbian", "#trans", "#genderqueer", "#bi", "#pansexual", "#queer", "#genderfluid", "#homosexual", "#bisexual", "#omni", "#transsexual", "#omnisexual", "#asexual", "#intersexual", "#topsexual", "#demisexual", "#demi", "#tiktok", "#tt", "#meta", "#metaverse", "#nft", "#crypto", "#blockchain", "#killallmen", "#onlyfans")
                 if (gendersArray.includes(message)) {
-                    return User.logout()
+                    return;
                 } else {
                     firebase.database().ref("messages").push().set({
                         "sender": firebase.auth().currentUser.displayName,
