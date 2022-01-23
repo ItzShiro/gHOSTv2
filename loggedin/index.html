@@ -37,7 +37,7 @@
 
 </head>
 
-<body onload="Content.loadProgress += 1">
+<body lang="pl-PL" onload="Content.loadProgress += 1">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
 
@@ -62,23 +62,23 @@
         <div class="midIcons">
             <div onclick="location.href='./'" class="icon">
                 <i class="fas fa-home"> </i>
-                <div class="label">Home</div>
+                <div data-key="topbar_home" class="label">Home</div>
             </div>
             <div onclick="groupChat()" class="icon">
                 <i class="fas fa-users"></i>
-                <div class="label">Group</div>
+                <div data-key="topbar_group" class="label">Group</div>
             </div>
             <div onclick="location.href='./messenger.html'" class="icon">
                 <i class="fas fa-user-friends"></i>
-                <div class="label">Messenger</div>
+                <div data-key="topbar_messenger" class="label">Messenger</div>
             </div>
             <div onclick="User.openProfile(firebase.auth().currentUser.uid)" class="icon">
                 <i class="fa fa-user"></i>
-                <div class="label">Profile</div>
+                <div data-key="topbar_profile" class="label">Profile</div>
             </div>
             <div onclick="Content.highlightSettings()" class="icon">
                 <i class="fas fa-cog"></i>
-                <div class="label">Settings</div>
+                <div data-key="topbar_settings" class="label">Settings</div>
             </div>
         </div>
         <div class="rightIcons">
@@ -97,53 +97,53 @@
                         </div>
                         <div class="text">
                             <span class="displayName">noname</span>
-                            <span style="opacity: 0.6; width: 186px;">Click to see your profile</span>
+                            <span data-key="dropdown_click-profile" style="opacity: 0.6; width: 186px;">Click to see your profile</span>
                         </div>
                     </section>
                     <hr />
                     <section class="settings" id="dropdownSettings">
                         <div class="thumbnail">
-                            <span><i class="fas fa-sliders-h"></i> Account</span>
+                            <span><i class="fas fa-sliders-h"></i> <span data-key="settings-thumbnail_account">Account</span></span>
                         </div>
                         <div class="elements">
                             <span>
                                 <i class="fas fa-unlock-alt"></i>
-                                <a onclick="User.openPopup('password')" href="#">Change Password</a>
+                                <a onclick="User.openPopup('password')" data-key="settings_change-password" href="#">Change Password</a>
                             </span>
 
                         </div>
                         <div class="thumbnail">
-                            <span><i class="fa fa-user"></i> User</span>
+                            <span><i class="fa fa-user"></i> <span data-key="settings-thumbnail_user">User</span></span>
                         </div>
                         <div class="elements">
                             <span>
                                 <i class="far fa-user"></i> 
-                                <a onclick="User.openPopup('dname')" href="#">Change Nickname</a>
+                                <a onclick="User.openPopup('dname')" data-key="settings_change-nickname" href="#">Change Nickname</a>
                             </span>
                             <span>
                                 <i class="far fa-user-circle"></i>
-                                <a onclick="User.openPopup('avatar')" href="#">Change Avatar</a>
+                                <a onclick="User.openPopup('avatar')"  data-key="settings_change-avatar" href="#">Change Avatar</a>
                             </span>
                             <span>
                                 <i class="far fa-image"></i>
-                                <a onclick="User.openPopup('background')" href="#">Change Background</a>
+                                <a onclick="User.openPopup('background')"  data-key="settings_change-bg" href="#">Change Background</a>
                             </span>
                             <span>
                                 <i class="far fa-address-card"></i>
-                                <a onclick="User.openPopup('status')" href="#">Change Status</a>
+                                <a onclick="User.openPopup('status')" data-key="settings_change-status" href="#">Change Status</a>
                             </span>
                             <span>
                                 <i class="far fa-trash-alt"></i>
-                                <a onclick="User.deleteStatus()" href="#">Delete Status</a>
+                                <a onclick="User.deleteStatus()" data-key="settings_del-status" href="#">Delete Status</a>
                             </span>
 
                             <div class="thumbnail">
-                                <span><i class="fa fa-palette"></i> Appearance</span>
+                                <span><i class="fa fa-palette"></i> <span data-key="settings-thumbnail_appearance"> Appearance</span></span>
                             </div>
                             <div class="elements">
                                 <span>
                                     <i class="far fa-moon"></i> 
-                                    <a onclick="User.changePalette()" href="#">Light/Dark Theme</a>
+                                    <a onclick="User.changePalette()" href="#" data-key="settings_change-mode">Light/Dark Theme</a>
                                 </span>
 
                             </div>
@@ -153,7 +153,7 @@
                     <section class="operations">
                         <button onclick="User.logout()">
                             <i class="fas fa-sign-out-alt"></i> 
-                            Logout
+                            <span data-key="btn_logout"> Logout </span>
                         </button>
                     </section>
                     </div>
@@ -166,14 +166,14 @@
             <div class="friends">
                 <div class="pending window">
                     <div class="thumbnail">
-                        <span>
+                        <span data-key="friends_pending">
                             Pending
                         </span>
                     </div>
                 </div>
                 <div class="invites window">
                     <div class="thumbnail">
-                        <span>
+                        <span data-key="friends_invites">
                             Invites
                         </span>
                     </div>
@@ -183,17 +183,17 @@
 
         <div class="posts">
             <div class="sendPost">
-                <input placeholder="Whats on your mind?" type="text" class="postInput">
+                <input type="text" class="postInput">
                 <input onchange="writeFilename()" style="display: none;" type="file" id="post_pic" name="post_pic" accept=".jpg, .jpeg, .png"></input>
-                <button class="photoAddBtn" onclick="addPostPhoto()" style="cursor: pointer;">Add Photo</button><br>
-                <span><span style="margin-left: 5px; " class="fileNamedisplay">No File Selected</span>
+                <button class="photoAddBtn" onclick="addPostPhoto()" style="cursor: pointer;" data-key="posts_add-photo">Add Photo</button><br>
+                <span><span style="margin-left: 5px; " class="fileNamedisplay" data-key="posts_nofile">No File Selected</span>
                 <script>
                     function writeFilename() {
                         document.querySelector('.fileNamedisplay').innerHTML = document.querySelector('input[type="file"]#post_pic').value.split(/(\\|\/)/g).pop()
                     }
                 </script>
                 </span>
-                <button class="sendBtn" onclick="User.addPost()" style="cursor: pointer;">Send</button>
+                <button class="sendBtn" onclick="User.addPost()" style="cursor: pointer;" data-key="btn_send">Send</button>
             </div>
             <div class="content">
             </div>
@@ -260,6 +260,8 @@
         console.log('%c Stop! ', 'font-size: 72px; font-weight:900; -webkit-text-stroke:3px black; color: red ');
         console.log('%c Console is meant bo be used by application developers, if anyone said that you can stole someone`s account or let you do more things its a lie and can get your account stolen ', 'font-size: 36px; font-weight:900; -webkit-text-stroke:1px black; color: lightblue');
     </script>
+    <!-- <script src="../assets/js/lang.js"></script>
+    <script src="../assets/js/functions/multilang.js"></script> -->
     <script src="../firebase/conn.js"></script>
     <script src="../assets/js/functions/user/friends.js"></script>
     <script src="../assets/js/functions/user/firebaseDisplay.js"></script>

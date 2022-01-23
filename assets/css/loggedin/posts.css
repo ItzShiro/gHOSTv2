@@ -158,7 +158,9 @@
 }
 
 .photoAddBtn {
-    width: 100px;
+    width: max-content;
+    padding-left: 5px;
+    padding-right: 5px;
     height: 35px;
     font-size: 13px;
     font-weight: 600;

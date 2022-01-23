@@ -108,11 +108,16 @@ nav {
     font-size: 16px;
     padding: 3px 15px 3px 15px;
     position: absolute;
+    width: max-content;
     transform: translateY(15px) translateX(-50%);
     left: 50%;
     opacity: 0;
     transition: 0.2s;
     pointer-events: none;
+}
+
+.content section.profile .displayName {
+    justify-content: left;
 }
 
 .rightIcons .dropdown .content {

@@ -362,45 +362,45 @@ var User = {
             case ("password"):
                 popupContent.innerHTML = `
                 <div class="content">
-                    <span>Change Password</span>
+                    <span data-key="settings_change-password">Change Password</span>
                     <input type="text">
-                    <button onclick="User.changePassword(document.querySelector('.changePopup .content input').value)">Change</button>
+                    <button onclick="User.changePassword(document.querySelector('.changePopup .content input').value)" data-key="btn_change">Change</button>
                 </div>`;
                 break;
             case ("dname"):
                 popupContent.innerHTML = `
                     <div class="content">
-                        <span>Change Username</span>
+                        <span data-key="settings_change-nickname">Change Username</span>
                         <input type="text">
-                        <button onclick="User.changeDName(document.querySelector('.changePopup .content input').value)">Change</button>
+                        <button onclick="User.changeDName(document.querySelector('.changePopup .content input').value)" data-key="btn_change">Change</button>
                     </div>`;
                 break;
             case ("status"):
                 popupContent.innerHTML = `
                         <div class="content">
-                            <span>Change Status</span>
+                            <span data-key="settings_change-status">Change Status</span>
                             <input type="text">
-                            <button onclick="User.changeStatus(document.querySelector('.changePopup .content input').value)">Change</button>
+                            <button onclick="User.changeStatus(document.querySelector('.changePopup .content input').value)" data-key="btn_change">Change</button>
                         </div>`;
                 break;
             case ("avatar"):
 
                 popupContent.innerHTML = `
                     <div class="content">
-                        <span>Change Avatar</span>
+                        <span data-key="settings_change-avatar">Change Avatar</span>
                         <input type="file" id="profile_pic" name="profile_pic"
           accept=".jpg, .jpeg, .png"></input>
-                        <button onclick="User.changeAvatar()">Change</button>
+                        <button onclick="User.changeAvatar()" data-key="btn_change">Change</button>
                     </div>`;
                 break;
             case ("background"):
 
                 popupContent.innerHTML = `
                         <div class="content">
-                            <span>Change Background</span>
+                            <span data-key="settings_change-bg">Change Background</span>
                             <input type="file" id="profile_pic" name="profile_pic"
               accept=".jpg, .jpeg, .png"></input>
-                            <button onclick="User.changeBg()">Change</button>
+                            <button onclick="User.changeBg()" data-key="btn_change">Change</button>
                         </div>`;
                 break;
 
@@ -550,25 +550,25 @@ firebase.auth().onAuthStateChanged((user) => {
             }
         })
         document.querySelectorAll('.avatarPicture').forEach((e) => {
-            if (user.photoURL === null) {
-                return;
-            } else {
-                e.style.background = "#fff"
-                e.src = user.photoURL
-            }
-        })
-        user.providerData.forEach(function(e) {
-            var provider = `${e.providerId}`
-            if (provider !== "password") {
-                document.querySelector('.dropdown .content .settings .elements').innerHTML = `
-                <div class="elements">
-                    <span>
-                        <i class="far fa-user-circle"></i>
-                        <a onclick="User.openPopup('password')" href="#">Password</a>
-                    </span>
-                </div>`;
-            }
-        });
+                if (user.photoURL === null) {
+                    return;
+                } else {
+                    e.style.background = "#fff"
+                    e.src = user.photoURL
+                }
+            })
+            // user.providerData.forEach(function(e) {
+            //     var provider = `${e.providerId}`
+            //     if (provider !== "password") {
+            //         document.querySelector('.dropdown .content .settings .elements').innerHTML = `
+            //         <div class="elements">
+            //             <span>
+            //                 <i class="far fa-user-circle"></i>
+            //                 <a onclick="User.openPopup('password')" href="#">Password</a>
+            //             </span>
+            //         </div>`;
+            //     }
+            // });
         window.setTimeout(() => {
             document.querySelector('.loader').style.opacity = "0"
             document.querySelector('.loader').style.pointerEvents = "none"
