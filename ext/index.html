@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+
+    <style>
+        .messenger {
+            width: 100%;
+            height: 100%;
+            transform: translateX(-100%);
+            transition: 0.2s;
+        }
+        
+        .messenger.loggedin {
+            transform: translateX(0%);
+        }
+        
+        .messages {
+            position: absolute;
+            color: var(--text);
+            padding: 20px;
+            height: calc(100% - 80px);
+            width: 100%;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+        
+        .message {
+            display: flex;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .message.byMe {
+            justify-content: right;
+        }
+        
+        .message .avatar {
+            width: 50px;
+            height: 50px;
+            background-color: var(--text);
+            border-radius: 7px;
+            margin-right: 10px;
+            overflow: hidden;
+        }
+        
+        .message .avatar img {
+            width: fit-content;
+            height: fit-content;
+            max-width: 50px;
+            max-height: 50px;
+        }
+        
+        .message .messageContent {
+            width: fit-content;
+            min-height: 50px;
+            height: auto;
+            background-color: var(--color4);
+            padding: 9px;
+            border-radius: 7px;
+            max-width: 85%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .message .messageContent .nickname {
+            transform: skew(-10deg);
+            opacity: 0.5;
+        }
+        
+        .message.byMe .avatar {
+            margin-left: 10px;
+            margin-right: 0px;
+        }
+        
+        .input {
+            width: calc(100% - 40px);
+            height: 50px;
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+        }
+        
+        .input input {
+            width: 100%;
+            height: 100%;
+            background-color: var(--color4);
+            border-radius: 10px;
+            border: none;
+            color: var(--text);
+            padding: 10px;
+            font-size: 16px;
+        }
+        
+        .login {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            position: absolute;
+            transition: 0.2s;
+        }
+        
+        .login.loggedin {
+            transform: translateX(100%);
+        }
+        
+        .login_input {
+            width: 280px;
+            height: 40px;
+            border-radius: 6px;
+            border: none;
+            background-color: var(--color4);
+            padding: 5px;
+        }
+        
+        button {
+            background-color: var(--color4);
+            border: none;
+            height: 40px;
+            width: 100px;
+            font-size: 17px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .login * {
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://ghostv2.netlify.app/assets/css/palette.css">
+    <link rel="stylesheet" href="https://ghostv2.netlify.app/assets/css/common.css">
+</head>
+
+<body onload="ghost.initialize()">
+    <!--
+        --gHOST mini
+    -->
+    <div class="login">
+        <h1>Login</h1>
+        <input type="text" placeholder="Email" class="login_input">
+        <input type="password" placeholder="Password" class="login_input">
+        <button onclick="ghost.login(document.querySelector(`input[type='text'].login_input`).value, document.querySelector(`input[type='password'].login_input`).value)">Login</button>
+    </div>
+    <div class="messenger">
+        <div class="messages">
+        </div>
+        <div class="input">
+            <input type="text" placeholder="Message..." class="messageInput">
+        </div>
+    </div>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgaLxAMcbXgXqIPHTzFH5vt9SQyPJhAdo",
+            authDomain: "ghost-chat-v2.firebaseapp.com",
+            projectId: "ghost-chat-v2",
+            storageBucket: "ghost-chat-v2.appspot.com",
+            messagingSenderId: "430406752276",
+            appId: "1:430406752276:web:3fafb6706b0149f54e2f01"
+        };
+        firebase.initializeApp(firebaseConfig)
+
+        function displayTime() {
+            var str = "";
+
+            const d = new Date();
+            var hours = d.getHours()
+            var minutes = d.getMinutes()
+            if (minutes < 10) {
+                minutes = "0" + minutes
+            }
+            str = `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()} - ` + hours + ":" + minutes;
+            return str;
+        }
+        var pPicture
+
+        var ghost = {
+            initialized: false,
+            logged: false,
+            initialize: function() {
+                if (ghost.initialized == true) return;
+                ghost.initialized = true
+            },
+            login: function(email, password) {
+                firebase.auth().signInWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        var user = userCredential.user;
+                        console.log(user)
+                    })
+            },
+            group: {
+                messages: new Array(),
+                send: function(message) {
+                    if (message == "" || message == " ") {
+                        return "";
+                    } else {
+                        var gendersArray = new Array("#lgbt", "#lgbtq", "#lgbtqa", "#lgbtqai", "#lgbtqaip", "#lgbtqaip+", "#lgbtqai+", "#lgbtqa+", "#lgbtq+", "#lgbt+", "#dream", "#dreamsexual", "#dreamsmp", "#kpop", "#dsmp", "#k-pop", "#bts", "#map", "#blm", "#zoo", "#iphone", "#ithings", "#imac", "#iloveapple", "#osx", "ipad", "#ipod", "#apple", "#gay", "#lesbian", "#trans", "#genderqueer", "#bi", "#pansexual", "#queer", "#genderfluid", "#homosexual", "#bisexual", "#omni", "#transsexual", "#omnisexual", "#asexual", "#intersexual", "#topsexual", "#demisexual", "#demi", "#tiktok", "#tt", "#meta", "#metaverse", "#nft", "#crypto", "#blockchain", "#killallmen", "#onlyfans")
+                        if (gendersArray.includes(message)) {
+                            return;
+                        } else {
+                            firebase.database().ref("messages").push().set({
+                                "sender": firebase.auth().currentUser.displayName,
+                                "senderProfile": pPicture,
+                                "senderUid": firebase.auth().currentUser.uid,
+                                "timestamp": displayTime(),
+                                "message": message
+                            });
+                        }
+                    }
+                }
+            },
+            post: {
+                posts: new Array(),
+                send: function(postMessage) {
+                    firebase.database().ref("posts").push().set({
+                        "sender": firebase.auth().currentUser.displayName,
+                        "senderProfile": pPicture,
+                        "senderUid": firebase.auth().currentUser.uid,
+                        "timestamp": displayTime(),
+                        "message": postMessage,
+                        "postImageUrl": ""
+                    });
+
+                }
+            }
+        }
+        document.body.onkeyup = function(e) {
+            if (e.keyCode == 13) {
+                if (document.activeElement === document.querySelector('input[type="text"].messageInput')) {
+                    ghost.group.send(document.querySelector('input[type="text"].messageInput').value)
+                    document.querySelector('input[type="text"].messageInput').value = ""
+                }
+            }
+        }
+
+        firebase.auth().onAuthStateChanged((e) => {
+            if (!e) return;
+            document.querySelector('.login').classList.add('loggedin')
+            document.querySelector('.messenger').classList.add('loggedin')
+            if (firebase.auth().currentUser.photoURL !== null) {
+                pPicture = firebase.auth().currentUser.photoURL
+            } else {
+                pPicture = 'https://firebasestorage.googleapis.com/v0/b/ghost-chat-v2.appspot.com/o/default%2FdefaultPPic.png?alt=media&token=fa2aea88-e0ad-44a4-9920-0e1ac35909ce'
+            }
+
+            firebase.database().ref("posts/").on('child_added', (snap) => {
+                ghost.post.posts.push(snap.val())
+            })
+            firebase.database().ref("messages/").on('child_added', (snap) => {
+                ghost.group.messages.push(snap.val())
+
+                var messageContent;
+                if (snap.val().senderUid == firebase.auth().currentUser.uid) {
+                    messageContent = `
+                                    <div class="message byMe">
+                                        <div class="messageContent">
+                                            ${snap.val().message}    
+                                        </div>
+                                        <div class="avatar">
+                                            <img src="${snap.val().senderProfile}" alt="">
+                                        </div>
+                                    </div>
+                                    `
+                } else {
+                    messageContent = `
+                                    <div class="message">
+                                        <div class="avatar">
+                                            <img src="${snap.val().senderProfile}" alt="">
+                                        </div>
+                                        <div class="messageContent">
+                                            <div class="nickname">${snap.val().sender}</div>
+                                            ${snap.val().message}    
+                                        </div>
+                                    </div>
+                                    `
+                }
+
+                document.querySelector('.messages').innerHTML += messageContent
+                document.querySelector('.messages').scrollTop = document.querySelector('.messages').scrollHeight - document.querySelector('.messages').clientHeight;
+
+            })
+        })
+    </script>
+</body>
+
+</html>

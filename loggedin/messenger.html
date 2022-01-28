@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="../assets/css/loggedin/posts.css">
     <link rel="stylesheet" href="../assets/css/palette.css">
     <link rel="stylesheet" href="../assets/css/loggedin/messenger.css">
+    <link rel="stylesheet" href="../assets/css/noWifi.css">
 
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
@@ -247,6 +248,12 @@
         console.log('%c Stop! ', 'font-size: 72px; font-weight:900; -webkit-text-stroke:3px black; color: red ');
         console.log('%c Console is meant bo be used by application developers, if anyone said that you can stole someone`s account or let you do more things its a lie and can get your account stolen ', 'font-size: 36px; font-weight:900; -webkit-text-stroke:1px black; color: lightblue');
     </script>
+    <div class="offline">
+        <img src="../assets/img/noWifi.png" alt="">
+        <span>It seems like you have no internet connection</span>
+    </div>
+    <script src="../assets/js/functions/main.js"></script>
+
     <script src="../firebase/conn.js"></script>
     <script src="../assets/js/functions/user/messenger.js"></script>
     <script src="../assets/js/functions/user/firebaseDisplay.js"></script>
