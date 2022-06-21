@@ -429,6 +429,7 @@ var addPostPhoto = function() {
 }
 var Content = {
     loadProgress: 0,
+    maxLoad: 4,
     dropdownToggle: function() {
         document.querySelector('.dropdownOpen').classList.toggle('active')
         document.querySelector('.dropdown .content').classList.toggle('active')
@@ -443,23 +444,26 @@ var Content = {
         return this;
     },
     lightTheme: null,
-    notification: function(thumbnail, content) {
-        if (this.loadProgress <= 2) return;
-        var content = `
+    notification: function(thumbnail, notifContent) {
+        firebase.auth().onAuthStateChanged((userState) => {
+            if (!userState) return;
+            if (this.loadProgress <= (this.maxLoad - 1)) return;
+            var content = `
       <div class="notification">
         <div class="thumbnail">${thumbnail}</div>
-        <div class="content">${content}</div>
+        <div class="content">${notifContent}</div>
       </div>
       `;
-        var div = document.createElement("div");
-        div.innerHTML = content;
-        document.querySelector(".notifications").appendChild(div);
-        window.setTimeout(() => {
-            div.classList.add('hide')
+            var div = document.createElement("div");
+            div.innerHTML = content;
+            document.querySelector(".notifications").appendChild(div);
             window.setTimeout(() => {
-                document.querySelector(".notifications").removeChild(div);
-            }, 200);
-        }, 2000);
+                div.classList.add('hide')
+                window.setTimeout(() => {
+                    document.querySelector(".notifications").removeChild(div);
+                }, 200);
+            }, 2000);
+        })
     },
     sounds: function(sound) {
         switch (sound) {
@@ -469,13 +473,23 @@ var Content = {
         }
     },
 
-    groupChatOpen: true,
+    groupChatOpen: false,
 }
 
 firebase.auth().onAuthStateChanged((user) => {
     if (!user) {
         location.href = "../auth";
     } else {
+
+        if (webData.site == "beta") {
+            console.log(firebase.auth().currentUser.uid !== "4p3dAIZKl9WSXpXyGlXOhyn5s692")
+            if (firebase.auth().currentUser.uid !== "4p3dAIZKl9WSXpXyGlXOhyn5s692") {
+                document.body.innerHTML = "Site In Construction - 403 (not well secured :) )"
+                document.head.innerHTML = "Site In Construction - 403 (not well secured :) )"
+
+            }
+
+        }
 
         Content.loadProgress += 1
 
@@ -494,7 +508,8 @@ firebase.auth().onAuthStateChanged((user) => {
                     --bar_boxShadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
                     --fog: rgba(0, 0, 0, 0.6);
                     --light-dark: white;
-                    --loader-icons: white;
+                    --dark-light-op: rgba(000,000,000, 0.3);
+                    --loader-icons: black;
                     --icons: #1e1d1e;
                     --text: #000;   
                 }
@@ -569,12 +584,41 @@ firebase.auth().onAuthStateChanged((user) => {
             //         </div>`;
             //     }
             // });
-        window.setTimeout(() => {
-            document.querySelector('.loader').style.opacity = "0"
-            document.querySelector('.loader').style.pointerEvents = "none"
 
-            Content.groupChatOpen = false
-        }, 1000)
+        firebase.database().ref("posts").once('value', (snap) => {
+            if (snap.val() == null || snap.val() == undefined) {
+                var loadTimer = window.setInterval(() => {
+                    if (Content.loadProgress == Content.maxLoad || Content.loadProgress == (Content.maxLoad - 1)) {
+                        window.setTimeout(() => {
+                            document.querySelector('.loader').style.opacity = "0"
+                            document.querySelector('.loader').style.pointerEvents = "none"
+
+                            clearInterval(loadTimer)
+                        }, 500)
+                    }
+                }, 31.25)
+            } else {
+                if (webData.site == "index") {
+                    Content.maxLoad += snap.numChildren();
+                }
+                var loadTimer = window.setInterval(() => {
+                    if (Content.loadProgress == Content.maxLoad || Content.loadProgress == (Content.maxLoad - 1)) {
+                        window.setTimeout(() => {
+                            document.querySelector('.loader').style.opacity = "0"
+                            document.querySelector('.loader').style.pointerEvents = "none"
+
+                            clearInterval(loadTimer)
+                        }, 500)
+                    }
+                }, 31.25)
+            }
+        })
+
+        firebase.database().ref("messages").once('value', (snap) => {
+            if (snap.val() == null || snap.val() == undefined) return;
+            Content.maxLoad += snap.numChildren()
+        })
+
         if (webData.site !== "index") return;
         friends.display()
         firebase.database().ref(`users/${firebase.auth().currentUser.uid}/friends`).on('child_changed', (snap) => {
@@ -619,4 +663,6 @@ window.setInterval(() => {
     } else {
         document.querySelector('.groupChat').classList.remove('active')
     }
+
+    document.querySelector('.loader .loadingBar .bar').style.width = (Content.loadProgress * 100 / Content.maxLoad) + "%"
 }, 31.25)

@@ -11,11 +11,17 @@ var message = {
             })
     },
     listener: null,
+    clearChat: function(uid) {
+        const idPair = [firebase.auth().currentUser.uid, uid].sort().slice(",")
+        firebase.database().ref(`dms/${idPair[0]}/${idPair[1]}/`).set("Erased")
+    },
     openMessages: function(uid) {
         const idPair = [firebase.auth().currentUser.uid, uid].sort().slice(",")
         webData.messenger.userOpen = uid
 
         firebase.database().ref(`users/${firebase.auth().currentUser.uid}/data/messenger_lastUser`)
+
+
 
         if (webData.messenger.userOpen !== uid) {
             window.location.reload(true);
@@ -46,7 +52,18 @@ var message = {
         this.listener = firebase.database().ref(`dms/${idPair[0]}/${idPair[1]}/`).on('child_added', (snap) => {
             if (webData.messenger.userOpen !== uid || webData.messenger.userOpen == null) return;
 
+            function checkMessageContent() {
+                emojiIndex.forEach((e) => {
+                    message = snap.val().content
+                    console.log(e.name)
+                    var text = "JD :)"
+                    text.replace(e.name, e.emoji)
+                    console.log(text)
+                })
 
+                var message;
+                return message
+            }
             //console.log(snap.val().content)
             firebase.database().ref(`users/${uid}/data`).on('value', (snapshott) => {
                 firebase.database().ref(`users/${firebase.auth().currentUser.uid}/data`).on('value', (snapshot) => {
@@ -56,7 +73,7 @@ var message = {
                         document.querySelector('.bodyContent .content .messages').innerHTML += `
                         <div class="${snap.key} messageContainer byMe">
                             <div class="message ">
-                                <div class="text">${snap.val().content}</div>
+                                <div class="text">${checkMessageContent()}</div>
                             </div>
                         </div>`
 
@@ -70,7 +87,7 @@ var message = {
                                 <div class="avatar40">
                                     <img src="${snapshott.val().profilePicture}" alt="">
                                 </div>
-                                <div class="text">${snap.val().content}</div>
+                                <div class="text">${checkMessageContent()}</div>
                             </div>
                         </div>`
 

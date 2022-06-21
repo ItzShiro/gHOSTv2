@@ -3,6 +3,7 @@ firebase.database().ref("posts").on("child_added", function(snapshot) {
 
     if (webData.site !== "index") return;
 
+
     var user = firebase.auth().currentUser
     var html = "";
 
@@ -10,7 +11,7 @@ firebase.database().ref("posts").on("child_added", function(snapshot) {
         if (snapshot.val().postImageUrl == undefined) {
             return;
         } else {
-            return `<img onclick="location.href='${snapshot.val().postImageUrl}'" src="${snapshot.val().postImageUrl}">`
+            return `<img onload="Content.loadProgress += 1" onclick="location.href='${snapshot.val().postImageUrl}'" src="${snapshot.val().postImageUrl}">`
         }
     }
 
@@ -62,6 +63,12 @@ firebase.database().ref("posts").on("child_added", function(snapshot) {
     }
 
     document.querySelector('.bodyContent>.posts>.content').insertAdjacentHTML('afterbegin', html);
+
+    console.log(snapshot.val().postImageUrl)
+
+    if (snapshot.val().postImageUrl == undefined || snapshot.val().postImageUrl == null || snapshot.val().postImageUrl === "") {
+        Content.loadProgress += 1
+    }
 
 })
 
@@ -119,6 +126,8 @@ firebase.database().ref("messages").on("child_added", function(snapshot) {
 
     document.querySelector('.groupChat .content .text').innerHTML += html;
     document.querySelector('.groupChat .content .text').scrollTop = document.querySelector('.groupChat .content .text').scrollHeight;
+
+    Content.loadProgress += 1
 
 })
 

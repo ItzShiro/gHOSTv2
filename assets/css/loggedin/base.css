@@ -246,6 +246,7 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .loader .content span {
@@ -256,6 +257,10 @@ hr {
     margin: 10px;
     border-radius: 50%;
     animation: loaderAnim 0.6s infinite ease-in-out;
+}
+
+.loader .content .dots {
+    display: flex;
 }
 
 .loader .content span:nth-child(2) {
@@ -496,4 +501,21 @@ div.hide {
     .leftArea {
         width: calc(100% - 15px - 512px);
     }
+}
+
+.loader .loadingBar {
+    width: 160px;
+    height: 7px;
+    background-color: var(--dark-light-op);
+    margin-top: 10px;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.loader .loadingBar .bar {
+    width: 0%;
+    height: 100%;
+    background-color: var(--text);
+    border-radius: 50px;
+    transition: 0.2s;
 }

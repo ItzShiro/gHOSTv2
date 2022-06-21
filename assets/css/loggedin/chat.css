@@ -207,3 +207,7 @@
     display: block;
     transform: skew(-15deg);
 }
+
+.groupChat .avatar {
+    border-radius: 50% !important;
+}

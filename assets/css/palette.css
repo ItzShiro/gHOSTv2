@@ -34,6 +34,7 @@
     --bar_boxShadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
     --fog: rgba(0, 0, 0, 0.6);
     --loader-icons: white;
+    --dark-light-op: rgba(255, 255, 255, 0.3);
     --icons: #87BEFF;
     --text: #ccc;
     --light-dark: black;
