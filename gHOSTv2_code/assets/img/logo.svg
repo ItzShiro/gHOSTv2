@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="drawing.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.18351571"
+     inkscape:cx="-389.61241"
+     inkscape:cy="-427.75629"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient2272">
+      <stop
+         style="stop-color:#5e81ac;stop-opacity:1;"
+         offset="0"
+         id="stop2268" />
+      <stop
+         style="stop-color:#81a1c1;stop-opacity:1"
+         offset="1"
+         id="stop2270" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient956">
+      <stop
+         style="stop-color:#2e3440;stop-opacity:1"
+         offset="0"
+         id="stop952" />
+      <stop
+         style="stop-color:#434c5e;stop-opacity:0"
+         offset="1"
+         id="stop954" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient956"
+       id="linearGradient958"
+       x1="48.658974"
+       y1="193.73483"
+       x2="173.00972"
+       y2="54.606174"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2272"
+       id="linearGradient2274"
+       x1="42.171112"
+       y1="194.81615"
+       x2="129.75728"
+       y2="104.70692"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:url(#linearGradient958);fill-opacity:1;fill-rule:evenodd;stroke-width:0.264583"
+       id="path103"
+       cx="107.59041"
+       cy="128.49574"
+       r="87.76638" />
+    <ellipse
+       style="opacity:1;fill:#434c5e;fill-opacity:0;stroke-width:0.264583"
+       id="path960"
+       cx="140.57039"
+       cy="89.568573"
+       rx="1.0813106"
+       ry="0.54065531" />
+    <ellipse
+       style="opacity:1;fill:#434c5e;fill-opacity:0;stroke-width:0.264583"
+       id="path1006"
+       cx="105.06735"
+       cy="120.56614"
+       rx="54.60619"
+       ry="58.210556" />
+    <ellipse
+       style="opacity:1;fill:#d40000;fill-opacity:0;stroke-width:0.264583"
+       id="path1035"
+       cx="124.71116"
+       cy="125.61225"
+       rx="57.669899"
+       ry="112.99696" />
+    <rect
+       style="opacity:1;fill:#d40000;fill-opacity:0;stroke-width:0.264583"
+       id="rect1611"
+       width="34.962379"
+       height="12.975728"
+       x="12.975728"
+       y="20.544903" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer 2">
+    <path
+       id="path2057"
+       style="opacity:1;fill:url(#linearGradient2274);stroke-width:0.264583"
+       d="m 174.09102,128.13531 c -8.76257,38.31545 -26.52328,65.95258 -62.98509,65.47904 l -4.59684,-0.0597 c -40.003398,-0.51953 -74.914486,-17.32588 -68.663221,-70.46542 3.56357,-30.2925 32.55893,5.22406 51.878707,-9.23762 29.051884,-21.746576 13.693694,-36.188059 47.421664,-43.205942 32.92369,-6.850535 42.90998,31.406072 36.94478,57.489682 z"
+       sodipodi:nodetypes="ssssssss" />
+    <circle
+       style="opacity:1;fill:#2e3440;fill-opacity:1;stroke-width:0.264583"
+       id="path3032"
+       cx="126.87379"
+       cy="99.480568"
+       r="6.8483009" />
+    <circle
+       style="fill:#2e3440;fill-opacity:1;stroke-width:0.264583"
+       id="path3032-4"
+       cx="153.54611"
+       cy="94.434464"
+       r="9.7317963" />
+  </g>
+</svg>

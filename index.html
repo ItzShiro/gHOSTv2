@@ -2,78 +2,94 @@
 <html lang="en">
 
 <head>
-    <meta name="google-site-verification" content="SzoJKz2C1WqaIP3Ii3FR_3r1kNRseDodmWEoivoWLQs" />
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>gHOST v2</title>
+    <title>gHOST 2.0</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets//favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets//favicon/favicon-16x16.png">
-    <link rel="manifest" href="./assets//favicon/site.webmanifest">
-    <link rel="mask-icon" href="./assets//favicon/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="shortcut icon" href="./assets//favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
+    <link rel="manifest" href="./favicon/site.webmanifest">
+    <link rel="mask-icon" href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="./favicon/favicon.ico">
     <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="msapplication-config" content="./assets//favicon/browserconfig.xml">
+    <meta name="msapplication-config" content="./favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="./assets/css/common.css" />
-    <link rel="stylesheet" href="./assets/css/loggedin/base.css">
-    <link rel="stylesheet" href="./assets/css/starting.css">
-    <link rel="stylesheet" href="./assets/css/loggedin/base.css">
-    <link rel="stylesheet" href="./assets/css/palette.css">
-
-    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap");
+        * {
+            font-weight: 400;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            outline: none;
+            color: #ccc;
+        }
+        
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            scroll-behavior: smooth;
+            background-color: #3b4252;
+            display: flex;
+            padding-top: 30px;
+            justify-content: flex-start;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .logo {
+            width: 100px;
+        }
+        
+        img {
+            width: 100px;
+        }
+        
+        .footer span {
+            font-size: 30px;
+        }
+        
+        .footer h1 {
+            font-size: 20px;
+            transform: skew(-7deg);
+            opacity: 0.6;
+        }
+        
+        .text {
+            width: 70%;
+        }
+        
+        .text>span {
+            font-size: 20px;
+        }
+    </style>
 </head>
 
 <body>
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
-
-    <nav>
-        <div class="ver" style="height: 50px;">
-            <img style="height: 80px; margin-top: 10px;" src="./assets/img/logo.svg" alt="" class="logo">
-            <span class="beta">BETA</span>
-        </div>
-        <div class="rightIcons">
-            <a href="./auth/index.html">Login</a>
-            <a href="./auth/register.html">Register</a>
-        </div>
-    </nav>
-    <div style="overflow: hidden;" class="bodyContent">
-        <div class="box">
-            <div class="thumbnail">
-                Hi There!
-            </div>
-            <div class="buttons">
-                <button onclick='location.href="./auth/index.html"' class="login"><span>Login</span></button>
-                <button onclick='location.href="./auth/register.html"' class="register"><span>Register</span></button>
-                <br>
-                <a href="" class="forgot"><span>Forgot your password?</span></a>
-                <div class="slide"></div>
-            </div>
+    <div class="logo">
+        <img src="logo.svg" alt="Logo" />
+    </div>
+    <div class="text">
+        <h1>Announcement</h1>
+        <span>
+        Me, CartoonGuy, As a creator of gHOSTv2, im sorry to announce that is
+        Project gHOST is no longer supported, for now you cannnot access any of
+        gHOST private messages, posts etc. gHOSTv2 will be now Synchro, better,
+        safer version of gHOSTv2, you may call it gHOSTv3. as of now code of
+        gHOSTv2 can be downloaded on my github. <a href="https://github.com/ItzShiro/chat-2.0/">[LINK]</a>
+      </span>
+        <div class="footer">
+            <span> Thank you for using gHOST 2.0 </span>
+            <h1>CartoonGuy, Creator of Project gHOST</h1>
         </div>
     </div>
-    <div class="changePopup">
-        <div class="close" onclick="User.closePopup()"><i class="fa fa-times-circle" aria-hidden="true"></i></div>
-        <div class="content">
-            <span>Reset Password</span>
-            <span>You will get message on your email with link that will let you reset your password</span>
-            <input class="resetInput" type="text">
-            <button onclick="resetPswd(`document.querySelector('.resetInput').value`)">Reset</button>
-        </div>
-    </div>
-    <script src="./firebase/conn.js"></script>
-    <script src="./assets/js/functions/starting.js"></script>
-    <script>
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                location.href = './loggedin'
-            }
-        });
-    </script>
 </body>
 
-</html>
+</htm
